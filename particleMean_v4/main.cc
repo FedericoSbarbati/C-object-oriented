@@ -74,5 +74,7 @@ int main(int argc, char *argv[])
   }
   delete es;
 
+  cout << "Prova git commit" << endl;
+
   return 0;
 }
