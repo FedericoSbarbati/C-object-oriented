@@ -47,7 +47,7 @@ void ElementReco::endJob() {
   // loop over elements
   for ( BraggMean* bMean: bCurve ) {
     // get mean and rms energies
-    const vector<double>& mean = bMean->eMean();
+    const vector<double>& mean = bMean->eMean(); // Qua ha effetto la Lazy Evaluation: se non li chiedi non li chiama
     const vector<double>& rms  = bMean->eRMS ();
     // loop over points
     for ( iBinD = 0; iBinD < nBinD; ++iBinD ) {

@@ -70,7 +70,7 @@ void BraggMean::compute() const {
   return;
 }
 
-
+//ECCO LA DIFFERENZA
 const vector<double>& BraggMean::eMean() const {
   if ( outdated ) compute();
   return mean;
