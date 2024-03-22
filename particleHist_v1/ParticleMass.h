@@ -1,8 +1,11 @@
 #ifndef ParticleMass_h
 #define ParticleMass_h
 
-#include "AnalysisSteering.h"
 #include <vector>
+#include <string>
+
+#include "AnalysisSteering.h"
+#include "TH1F.h"
 
 class Event;
 class MassMean;
@@ -18,6 +21,14 @@ public:
 
     ~ParticleMass() override;
 
+    // Particle struct to hold analysis objects
+    struct Particle
+    {
+        std::string name;
+        MassMean *mMean; // statistic object
+        TH1F *hMean;     // graph
+    };
+
     // function to be called at execution start
     void beginJob() override;
 
@@ -28,7 +39,12 @@ public:
     void process(const Event &ev) override;
 
 private:
-    std::vector<MassMean *> pList;
+    std::vector<Particle *> pList;
+
+    // function to create a "decay mode"
+    void pCreate(const std::string &name, float min, float max);
+
+    
 };
 
 #endif
