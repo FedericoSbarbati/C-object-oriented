@@ -10,6 +10,7 @@
 #include "TFile.h"
 #include "TDirectory.h"
 
+double mass(const Event &ev);
 using namespace std;
 
 ParticleMass::ParticleMass()
@@ -87,9 +88,13 @@ void ParticleMass::endJob()
 void ParticleMass::process(const Event &ev)
 {
     // adding event to all the MassMean instances
-    for (MassMean *mMean : pList)
+    for (Particle *p : pList)
     {
-        mMean->add(ev);
+        if(p->mMean->add(ev))
+        {
+            double invM = mass(ev);
+            p->hMean->Fill(invM);
+        }
     }
     return;
 }
