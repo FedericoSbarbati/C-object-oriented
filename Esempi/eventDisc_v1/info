@@ -16,8 +16,8 @@ compile
 
 to run:
 
-fill train.txt hDist.root
+./fill train.txt hDist.root
 
-disc test.txt hDist.root hDisc.root
+./disc test.txt hDist.root hDisc.root
 
 "train.txt" and "test.txt" files can be found in the discData directory
