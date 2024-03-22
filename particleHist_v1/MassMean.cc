@@ -22,7 +22,7 @@ MassMean::~MassMean()
 }
 
 // add data from a new event
-void MassMean::add(const Event &ev)
+bool MassMean::add(const Event &ev)
 {
   double invMass = mass(ev);
   // Check masses range
@@ -32,8 +32,11 @@ void MassMean::add(const Event &ev)
     massSum += invMass;
     squareSum += (invMass * invMass);
     nAccepted++;
-  }
 
+    return true;
+  }
+  else
+    return false;
 }
 
 // compute mean and rms

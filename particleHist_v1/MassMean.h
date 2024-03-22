@@ -13,7 +13,7 @@ public:
   // destructor
   ~MassMean();
 
-  void add(const Event &ev); // add data from a new event
+  bool add(const Event &ev); // add data from a new event
   void compute();            // compute mean and rms
 
   int getNacceptedEv() const; // return number of accepted events
