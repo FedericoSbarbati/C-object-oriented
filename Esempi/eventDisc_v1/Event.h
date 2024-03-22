@@ -1,58 +1,62 @@
 #ifndef Event_h
 #define Event_h
 
-class Event {
+class Event
+{
 
- public:
+public:
+  enum Type
+  {
+    signal,
+    background
+  };
 
-  enum Type { signal, background };
-
-  Event( int n,
-         float x,
-         float y,
-         float k,
-         float e1,
-         float e2,
-         float a,
-         float b,
-	 int   t ):
-   evNumber( n ),
-   pX  ( x  ),
-   pY  ( y  ),
-   pK  ( k  ),
-   pE1 ( e1 ),
-   pE2 ( e2 ),
-   pA  ( a  ),
-   pB  ( b  ),
-   pType ( t ? signal : background ) {
+  Event(int n,
+        float x,
+        float y,
+        float k,
+        float e1,
+        float e2,
+        float a,
+        float b,
+        int t) : evNumber(n),
+                 pX(x),
+                 pY(y),
+                 pK(k),
+                 pE1(e1),
+                 pE2(e2),
+                 pA(a),
+                 pB(b),
+                 pType(t ? signal : background)
+  {
   }
 
   // default copy constructor and assignment
-  Event           ( const Event& x ) = default;
-  Event& operator=( const Event& x ) = default;
+  Event(const Event &x) = default;
+  Event &operator=(const Event &x) = default;
 
-  ~Event() {
+  ~Event()
+  {
   }
 
   // return event id.
   int eventNumber() const { return evNumber; }
 
   // return data
-  float muoX   () const { return pX; }
-  float muoY   () const { return pY; }
+  float muoX() const { return pX; }
+  float muoY() const { return pY; }
   float trkKink() const { return pK; }
   float muoEta1() const { return pE1; }
   float muoEta2() const { return pE2; }
-  float muoA   () const { return pA; }
-  float muoB   () const { return pB; }
+  float muoA() const { return pA; }
+  float muoB() const { return pB; }
 
   // return event type
-  Type  evType  () const { return pType; }
+  Type evType() const { return pType; }
 
- private:
-
+private:
   // event identifier
-  int evNumber;    // event id
+  int evNumber; // event id
 
   float pX;  // chi square / muon kink - X
   float pY;  // chi square / muon kink - Y
@@ -64,8 +68,6 @@ class Event {
 
   // event type
   Type pType;
-
 };
 
 #endif
-
