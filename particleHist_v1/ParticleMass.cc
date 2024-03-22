@@ -46,11 +46,8 @@ void ParticleMass::beginJob()
     pList.reserve(2);
 
     // creating Particles instances
-
-    pCreate("")
-
-    pList.push_back(new MassMean(0.495, 0.500));
-    pList.push_back(new MassMean(1.115, 1.116));
+    pCreate("K^{0}_{s}",0.495,0.500);
+    pCreate("#Lambda_{0}",1.115,1.116);
 
     return;
 }
@@ -59,9 +56,14 @@ void ParticleMass::endJob()
 {
 
     // loop over MassMean objects
-    for (MassMean *mMean : pList)
+    for (Particle *p : pList)
     {
-        mMean->compute();
+        MassMean *statMean = p->mMean;
+        TH1F *graph = p->hMean;
+
+        //Data evalution
+        statMean->compute();
+        
         // Printing results:
         cout << endl
              << endl;
