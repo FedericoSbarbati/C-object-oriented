@@ -25,18 +25,20 @@ ParticleMass::~ParticleMass()
 void ParticleMass::pCreate(const string &name, float min, float max)
 {
     // create name for TH1F object
+    string label = " invariant Mass hist; M[Gev/c^{2}]; Occurrences";
+    string title = name + label;
     const char *hName = name.c_str();
+    const char *hTitle = title.c_str();
 
-    // bin number equal to point number
-    // int nBinD = Event::minSize;
-
+    // Setting bin number constant
+    int nBins = 150;
+    
     // create TH1F and statistic objects and store their pointers
     Particle *p = new Particle;
     p->name = name;
     p->mMean = new MassMean(min, max);
-    p->hMean = new TH1F();
-    p->hMean->SetName(hName);
-    p->hMean->SetTitle(hName);
+    p->hMean = new TH1F(hName,hTitle,nBins,min,max);
+    p->hMean->SetFillColor(kBlue);
     pList.push_back(p);
 
     return;
@@ -58,7 +60,7 @@ void ParticleMass::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFile *file = new TFile("hist.root", "CREATE");
+    TFile *file = new TFile("hist.root", "RECREATE");
 
     // loop over MassMean objects
     for (Particle *p : pList)
@@ -77,11 +79,15 @@ void ParticleMass::endJob()
         cout << "Number of accepted Events: " << statMean->getNacceptedEv() << endl;
         cout << endl
              << endl;
-        
-        hist->Write();  
+
+        hist->Write();
     }
 
     file->Close();
+    delete file;
+    // Restoring working area;
+    currentDir->cd();
+
     return;
 }
 
@@ -90,7 +96,7 @@ void ParticleMass::process(const Event &ev)
     // adding event to all the MassMean instances
     for (Particle *p : pList)
     {
-        if(p->mMean->add(ev))
+        if (p->mMean->add(ev))
         {
             double invM = mass(ev);
             p->hMean->Fill(invM);
