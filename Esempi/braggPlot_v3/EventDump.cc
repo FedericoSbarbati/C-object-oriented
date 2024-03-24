@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// concrete factory to create an EventDump analyzer
+// concrete factory to create an EventDump analyzer (IMPORTANTE!!)
 class EventDumpFactory: public AnalysisFactory::AbsFactory {
  public:
   // assign "dump" as name for this analyzer and factory

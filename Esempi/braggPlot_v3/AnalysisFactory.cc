@@ -23,7 +23,7 @@ vector<AnalysisSteering *> AnalysisFactory::create(const AnalysisInfo *info)
   {
     // create analysis object if its name is listed in the command line
     if (info->contains(element.first))
-      aList.push_back(element.second->create(info));
+      aList.push_back(element.second->create(info)); //Create an AnalysisSteering object by the function in the AbstractClass
   }
   return aList;
 }
@@ -31,7 +31,7 @@ vector<AnalysisSteering *> AnalysisFactory::create(const AnalysisInfo *info)
 // function to add analyzer concrete factories
 void AnalysisFactory::registerFactory(const string &name, AbsFactory *b)
 {
-  static map<string, AbsFactory *> &fm = *factoryMap();
+  static map<string, AbsFactory *> &fm = *factoryMap(); // Add analysis objects associating a key to an analyzer
   fm[name] = b;
   return;
 }
