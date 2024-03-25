@@ -1,6 +1,9 @@
+#include <iostream>
+
 #include "EventDump.h"
 #include "Event.h"
-#include <iostream>
+#include "AnalysisFactory.h"
+
 
 using namespace std;
 // DECLARATION AND DEFINITION OF EVENT DUMP FACTORY: concrete factory to create an EventDump analyzer (IMPORTANTE!!)
@@ -15,8 +18,9 @@ public:
     return new EventDump(info); // Override of AbsFactory function for create that creates and return an Event Dump instance
   }
 };
+static EventDumpFactory ed;
 
-EventDump::EventDump()
+EventDump::EventDump(const AnalysisInfo *info) : AnalysisSteering(info)
 {
 }
 
