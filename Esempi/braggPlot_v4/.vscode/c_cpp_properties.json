@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/home/fedesbarbi/C-object-oriented/util/include/**",
-                "/home/fedesbarbi/root/include/**"
+                "/home/fedesbarbi/root/include/**",
+                "/home/fedesbarbi/C-object-oriented/Esempi/braggPlot_v4/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
