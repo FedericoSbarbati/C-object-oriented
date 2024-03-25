@@ -3,17 +3,36 @@
 #include <sstream>
 #include <cmath>
 
-#include "ParticleMass.h"
-#include "Event.h"
-#include "MassMean.h"
+// root classes include files
 #include "TH1F.h"
 #include "TFile.h"
 #include "TDirectory.h"
 
+#include "Event.h"
+#include "MassMean.h"
+#include "AnalysisInfo.h"
+#include "AnalysisFactory.h"
+#include "ParticleMass.h"
+
 double mass(const Event &ev);
 using namespace std;
 
-ParticleMass::ParticleMass()
+// concrete factory to create an ElementReco analyzer
+class ParticleMassFactory : public AnalysisFactory::AbsFactory
+{
+public:
+    // assign "plot" as name for this analyzer and factory
+    ParticleMassFactory() : AnalysisFactory::AbsFactory("plot") {}
+    // create an ElementReco when builder is run
+    AnalysisSteering *create(const AnalysisInfo *info) override
+    {
+        return new ParticleMass(info);
+    }
+};
+
+static ParticleMassFactory pm;
+
+ParticleMass::ParticleMass(const AnalysisInfo *info) : AnalysisSteering(info)
 {
 }
 
@@ -32,12 +51,12 @@ void ParticleMass::pCreate(const string &name, float min, float max)
 
     // Setting bin number constant
     int nBins = 150;
-    
+
     // create TH1F and statistic objects and store their pointers
     Particle *p = new Particle;
     p->name = name;
     p->mMean = new MassMean(min, max);
-    p->hMean = new TH1F(hName,hTitle,nBins,min,max);
+    p->hMean = new TH1F(hName, hTitle, nBins, min, max);
     p->hMean->SetFillColor(kBlue);
     pList.push_back(p);
 
@@ -60,7 +79,13 @@ void ParticleMass::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFile *file = new TFile("hist.root", "RECREATE");
+    TFile *file = new TFile(aInfo->value("plot").c_str(), "CREATE");
+    if (file->IsZombie())
+    {
+        cerr << "Error opening file!" << endl;
+        delete file;
+        return;
+    }
 
     // loop over MassMean objects
     for (Particle *p : pList)
