@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/fedesbarbi/root/include/**"
+                "/home/fedesbarbi/root/include/**",
+                "/home/fedesbarbi/C-object-oriented/util/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
