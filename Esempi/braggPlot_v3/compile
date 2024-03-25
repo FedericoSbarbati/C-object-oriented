@@ -1,2 +1,3 @@
 rm -f main
 c++ -Wall -I. `root-config --cflags` -o main *cc `root-config --libs`
+./main input bragg_events.dat plot hist_ref.root
