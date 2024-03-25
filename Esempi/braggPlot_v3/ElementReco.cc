@@ -77,6 +77,12 @@ void ElementReco::endJob()
   TDirectory *currentDir = gDirectory;
   // open histogram file
   TFile *file = new TFile(aInfo->value("plot").c_str(), "CREATE");
+  if (file->IsZombie())
+  {
+    cerr << "Error opening file!" << endl;
+    delete file; // Si assicura di non lasciare risorse non gestite.
+    return;      // Esce dalla funzione per evitare ulteriori errori.
+  }
 
   // fill distributions with mean and rms energies
 
