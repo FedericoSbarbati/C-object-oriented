@@ -1,7 +1,7 @@
 #ifndef BGCalc_h
 #define BGCalc_h
 
-#include "ActiveObserver.h"
+#include "util/include/ActiveObserver.h"
 #include "AnalysisSteering.h"
 
 class AnalysisInfo;
