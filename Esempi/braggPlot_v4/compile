@@ -1,4 +1,4 @@
 #!/bin/sh
 rm -f main
-export CORSOCXX_UTIL=${HOME}/didattica/corsocxx/y2324
+export CORSOCXX_UTIL=${HOME}/fedesbarbi/C-object-oriented/util/include
 c++ -Wall -I. -I ${CORSOCXX_UTIL} `root-config --cflags` -o main *cc `root-config --libs`
