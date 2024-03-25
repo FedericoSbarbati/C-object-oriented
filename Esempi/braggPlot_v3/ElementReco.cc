@@ -31,7 +31,7 @@ public:
 /*
 Cronology of things happening:
 
-1) DECLARATION of a static CONCRETE-FACTORY -> It's create before main() execution
+1) DECLARATION of a static CONCRETE-FACTORY -> It's created before main() execution
 2) CALL TO ABSFACTORY CONSTRUCTOR: It contains in the definition a call to the function registerFactory(string,AbsFactory);
 2.1) registerFactory declares a static fm map that is allocated trough a call to the factoryMap() function
 2.2) factoryMap() is  function that return a static map<string,AbsFactory*> type
