@@ -79,10 +79,10 @@ void ParticleMass::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFile *file = new TFile(aInfo->value("plot").c_str(), "CREATE");
+    TFile *file = new TFile(aInfo->value("plot").c_str(), "CREATE"); // RECREATE
     if (file->IsZombie())
     {
-        cerr << "Error opening file!" << endl;
+        cerr << "Error opening file with name: " << aInfo->value("plot") << endl;
         delete file;
         return;
     }
