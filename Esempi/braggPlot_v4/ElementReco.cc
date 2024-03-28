@@ -14,6 +14,7 @@
 #include <cmath>
 
 using namespace std;
+//Commento
 
 // concrete factory to create an ElementReco analyzer
 class ElementRecoFactory: public AnalysisFactory::AbsFactory {
