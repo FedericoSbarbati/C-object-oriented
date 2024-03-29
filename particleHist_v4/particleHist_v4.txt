@@ -11,7 +11,7 @@ tar -xzf util.tgz
 c++ -I ..../corsocxx
 
 ***
-In "AnalysisSteering.h" remove the "process" function declaration.
+In "AnalysisSteering.h" remove the "process" function declaration. OK
 
 ***
 In "EventDump.h,cc" and "ParticleMass.h,cc":
