@@ -11,29 +11,31 @@
 using namespace std;
 
 // define a builder for this analyzer and register it
-class BGCalcFactory: public AnalysisFactory::AbsFactory {
- public:
-  BGCalcFactory(): AnalysisFactory::AbsFactory( "bg" ) {}
-  AnalysisSteering* create( const AnalysisInfo* info ) override {
-    return new BGCalc( info );
+class BGCalcFactory : public AnalysisFactory::AbsFactory
+{
+public:
+  BGCalcFactory() : AnalysisFactory::AbsFactory("bg") {}
+  AnalysisSteering *create(const AnalysisInfo *info) override
+  {
+    return new BGCalc(info);
   }
 };
-// create a global BGCalcFactory, so that it is created and registered 
+// create a global BGCalcFactory, so that it is created and registered
 // before main execution start:
 // when the AnalysisFactory::create function is run,
 // a BGCalcFactory will be available with name "bg".
 static BGCalcFactory bg;
 
-BGCalc::BGCalc( const AnalysisInfo* info ):
- AnalysisSteering( info ) {
+BGCalc::BGCalc(const AnalysisInfo *info) : AnalysisSteering(info)
+{
 }
 
-
-BGCalc::~BGCalc() {
+BGCalc::~BGCalc()
+{
 }
 
-
-void BGCalc::beginJob() {
+void BGCalc::beginJob()
+{
 
   // min and max energy, min and max point
   eMin = 3000;
@@ -45,35 +47,36 @@ void BGCalc::beginJob() {
   nEvt = bSum = bSqr = 0;
 
   return;
-
 }
 
-
-void BGCalc::update( const Event& ev ) {
+void BGCalc::update(const Event &ev)
+{
 
   // total energy
-  static TotalEnergy* eTot = TotalEnergy::instance();
-  float eRaw = eTot->rawSum();
-  if ( eRaw < eMin ) return;
-  if ( eRaw > eMax ) return;
+  static TotalEnergy *eTot = TotalEnergy::instance();
+  float eRaw = eTot->rawSum(); // Energia perduta in totale dall'evento
+  if (eRaw < eMin)
+    return;
+  if (eRaw > eMax)
+    return;
 
   // loop over points and update sums
   int iBin;
-  for ( iBin = bMin; iBin < bMax; ++iBin ) {
-    int ene = ev.energy( iBin );
-    bSum +=   ene;
-    bSqr += ( ene * ene );
+  for (iBin = bMin; iBin < bMax; ++iBin)
+  {
+    int ene = ev.energy(iBin);
+    bSum += ene;
+    bSqr += (ene * ene);
   }
 
   // update event counter
   ++nEvt;
 
   return;
-
 }
 
-
-void BGCalc::endJob() {
+void BGCalc::endJob()
+{
 
   // compute background
 
@@ -82,13 +85,11 @@ void BGCalc::endJob() {
   // total number of measurements
   int nTot = nEvt * nBin;
   // compute mean and rms
-  float bMean =          bSum * 1.0 / nTot;
-  float bRMS  = sqrt ( ( bSqr * 1.0 / nTot ) - ( bMean * bMean ) );
+  float bMean = bSum * 1.0 / nTot;
+  float bRMS = sqrt((bSqr * 1.0 / nTot) - (bMean * bMean));
   // printout result
   cout << nEvt << endl;
   cout << "background " << bMean << " +- " << bRMS << endl;
 
   return;
-
 }
-

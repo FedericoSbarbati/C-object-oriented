@@ -32,7 +32,7 @@ void TotalEnergy::update( const Event& ev ) {
 
 // sum of measurements, no background subtraction
 float TotalEnergy::rawSum() {
-  // check for new event and return result
+  // check for new event and return result ( eventually upgraded -> Calls Update if not updated )
   check();
   return dataSum;
 }
