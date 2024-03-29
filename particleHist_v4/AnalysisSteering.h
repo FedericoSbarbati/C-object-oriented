@@ -4,27 +4,24 @@
 class AnalysisInfo;
 class Event;
 
-class AnalysisSteering {
+class AnalysisSteering
+{
 
- public:
-
-  AnalysisSteering( const AnalysisInfo* info );
+public:
+  AnalysisSteering(const AnalysisInfo *info);
   // deleted copy constructor and assignment to prevent unadvertent copy
-  AnalysisSteering           ( const AnalysisSteering& x ) = delete;
-  AnalysisSteering& operator=( const AnalysisSteering& x ) = delete;
+  AnalysisSteering(const AnalysisSteering &x) = delete;
+  AnalysisSteering &operator=(const AnalysisSteering &x) = delete;
 
   virtual ~AnalysisSteering();
 
   // function to be called at execution start
   virtual void beginJob() = 0;
   // function to be called at execution end
-  virtual void   endJob() = 0;
+  virtual void endJob() = 0;
 
- protected:
-
-  const AnalysisInfo* aInfo;
-
+protected:
+  const AnalysisInfo *aInfo;
 };
 
 #endif
-
