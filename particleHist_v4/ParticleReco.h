@@ -37,12 +37,12 @@ class ParticleReco: public Singleton<ParticleReco>,
   // destructor
   ~ParticleReco() override;
 
-  // particle type
-  ...;
-  // particle energy
-  ...;
-  // particle mass
-  ...;
+  // Decay type
+  ParticleType decayType;
+  // Total energy
+  double totalEnergy;
+  // Invariant mass
+  double invariantMass;
 
 };
 

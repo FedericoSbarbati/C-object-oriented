@@ -25,7 +25,7 @@ In "EventSource.h,cc":
 - declare the "get" function as "private",
 - declare and implement a "public" function "run",
 - move the event loop from the "main" function to the new "run" function,
-  and use "Dispatcher<Event>::notify" in the event loop.
+  and use "Dispatcher<Event>::notify" in the event loop. OK
 
 ***
 Create a class "ParticleReco" to compute total energy and invariant mass:
