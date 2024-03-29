@@ -99,24 +99,43 @@ void ParticleReco::update(const Event &ev)
     return;
   }
 
-  ...
-
-      return;
 }
 
+/*
+Order of Operations:
+
+check() è LazyObserver::check();
+Se l'oggetto non è Uptodate allora chiama LazyObserver::update(*oggetto)
+Questa è virtual e abstract -> Override in ParticleReco::Update()
+
+Richiamando ParticleReco::Update() rifà eventualmente le stime e:
+UpToDate = true;
+updating = false;
+
+se no manda un warning recursive call.
+*/
+
 // return particle type
-...(){
+  ParticleReco::ParticleType ParticleReco::getParticleType()
+  {
     // check for new event and return result
-    ...}
+    check();
+    return decayType;
+
+    }
 
 // return particle energy
-...(){
+double ParticleReco::getParticleEnergy()
+{
     // check for new event and return result
-    ...}
+    check();
+    return totalEnergy;
+    }
 
 // return particle mass
-...()
+double ParticleReco::getParticleMass()
 {
   // check for new event and return result
-  ...
+  check();
+  return invariantMass;
 }

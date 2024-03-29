@@ -36,9 +36,9 @@ Create a class "ParticleReco" to compute total energy and invariant mass:
     total energy,
     invariant mass,
 - compute those variables in the "update" function, using the code formerly
-  in the "mass" global function,
+  in the "mass" global function, OK
 - declare and implement functions to check for new events and return the
-  decay properties.
+  decay properties. OK
 
 ***
 In "MassMean.cc" and "ParticleMass.cc" get the invariant mass from

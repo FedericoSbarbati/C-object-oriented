@@ -6,33 +6,37 @@
 #include "Singleton.h"
 #include "LazyObserver.h"
 
-class ParticleReco: public Singleton<ParticleReco>,
-                    public LazyObserver<Event> {
+class ParticleReco : public Singleton<ParticleReco>,
+                     public LazyObserver<Event>
+{
 
   friend class Singleton<ParticleReco>;
 
- public:
-
+public:
   // particle types
-  enum ParticleType { K0, Lambda0, unknown };
+  enum ParticleType
+  {
+    K0,
+    Lambda0,
+    unknown
+  };
 
   // recompute informations for new event
-  void update( const Event& ev ) override;
+  void update(const Event &ev) override;
 
   // return particle type
-  ...();
+  ParticleType getParticleType();
   // return particle energy
-  ...();
+  double getParticleEnergy();
   // return particle mass
-  ...();
+  double getParticleMass();
 
- private:
-
+private:
   // private constructor and destructor for singleton
   ParticleReco();
   // deleted copy constructor and assignment to prevent unadvertent copy
-  ParticleReco           ( const ParticleReco& x ) = delete;
-  ParticleReco& operator=( const ParticleReco& x ) = delete;
+  ParticleReco(const ParticleReco &x) = delete;
+  ParticleReco &operator=(const ParticleReco &x) = delete;
 
   // destructor
   ~ParticleReco() override;
@@ -43,8 +47,6 @@ class ParticleReco: public Singleton<ParticleReco>,
   double totalEnergy;
   // Invariant mass
   double invariantMass;
-
 };
 
 #endif
-
