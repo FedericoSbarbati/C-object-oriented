@@ -18,7 +18,7 @@ In "EventDump.h,cc" and "ParticleMass.h,cc":
 - include the Observer header:
 #include "util/include/ActiveObserver.h"
 - inherit from "ActiveObserver<Event>" in addition to the existing base,
-- rename the function "process" as "update".
+- rename the function "process" as "update". OK
 
 ***
 In "EventSource.h,cc":
