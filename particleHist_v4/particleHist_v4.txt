@@ -123,21 +123,26 @@ main                   modify Hist_v3 or copy braggPlot_v4
 ********* final list of classes   *********
 
                        .h                            .cc
-AnalysisFactory        copy   Hist_v3                copy   Hist_v3
-AnalysisSteering       modify Hist_v3                copy   Hist_v3
-AnalysisInfo           copy   Hist_v3                copy   Hist_v3
-SourceFactory          copy   Hist_v3                copy   Hist_v3
-Event                  copy   Hist_v3                copy   Hist_v3
-EventSource            modify Hist_v3                modify Hist_v3
-EventReadFromFile      copy   Hist_v3                copy   Hist_v3
-EventSim               copy   Hist_v3                copy   Hist_v3
-EventDump              modify Hist_v3                modify Hist_v3
-ParticleMass           modify Hist_v3                modify Hist_v3
-MassMean               copy   Hist_v3                modify Hist_v3
-Constants              modify Hist_v3                modify Hist_v3
-Utilities              copy   Hist_v3                copy   Hist_v3
-ParticleReco           to complete                   to complete
-ProperTime             to do                         to do
-LifetimeFit            to do                         to do
-ParticleLifetime       to do                         to do
+AnalysisFactory        copy   Hist_v3                copy   Hist_v3 OK
+AnalysisSteering       modify Hist_v3                copy   Hist_v3 OK
+AnalysisInfo           copy   Hist_v3                copy   Hist_v3 OK
+SourceFactory          copy   Hist_v3                copy   Hist_v3 Problem
+Event                  copy   Hist_v3                copy   Hist_v3 OK
+EventSource            modify Hist_v3                modify Hist_v3 OK
+EventReadFromFile      copy   Hist_v3                copy   Hist_v3 OK
+EventSim               copy   Hist_v3                copy   Hist_v3 OK
+EventDump              modify Hist_v3                modify Hist_v3 OK
+ParticleMass           modify Hist_v3                modify Hist_v3 OK
+MassMean               copy   Hist_v3                modify Hist_v3 OK
+Constants              modify Hist_v3                modify Hist_v3 OK
+Utilities              copy   Hist_v3                copy   Hist_v3 OK
+ParticleReco           to complete                   to complete OK
+ProperTime             to do                         to do OK
+LifetimeFit            to do                         to do OK
+ParticleLifetime       to do                         to do OK
 
+
+To compile:
+
+export CORSOCXX_UTIL=${HOME}/C-object-oriented/
+c++ -Wall -I. -I ${CORSOCXX_UTIL} `root-config --cflags` -o main *cc `root-config --libs`
