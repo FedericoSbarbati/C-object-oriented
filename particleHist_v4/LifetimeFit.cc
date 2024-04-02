@@ -26,17 +26,14 @@ bool LifetimeFit::add(const Event &ev)
   static ParticleReco *ener = ParticleReco::instance();
   double invMass = ener->getParticleMass();
 
-  cout << "Lifetimefit::Add -Inv mass: " << invMass;
   // Check masses range
   if (invMass >= minMass && invMass <= maxMass)
   {
-    cout << " - Risultato true" << endl;
     nAccepted++;
     return true;
   }
   else
   {
-        cout << " - Risultato false" << endl;
     return false;
   }
 }

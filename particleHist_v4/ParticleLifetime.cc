@@ -55,7 +55,7 @@ void ParticleLifetime::pCreate(const string &name, float min, float max, float t
     // create TH1F and statistic objects and store their pointers
     Particle *p = new Particle;
     p->name = name;
-    p->tMean = new LifetimeFit(min,max);
+    p->tMean = new LifetimeFit(min, max);
     p->hMean = new TH1F(hName, hTitle, nBins, timeMin, timeMax);
     p->hMean->SetFillColor(kRed);
     pList.push_back(p);
@@ -79,7 +79,7 @@ void ParticleLifetime::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFileProxy* file = new TFileProxy(aInfo->value("time").c_str(), "CREATE"); // RECREATE
+    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "CREATE"); // RECREATE
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("time") << endl;
@@ -113,7 +113,6 @@ void ParticleLifetime::endJob()
 
 void ParticleLifetime::update(const Event &ev)
 {
-    cout << "Call to ParticleLifetime::Update" << endl;
     // adding event to all the MassMean instances
     for (Particle *p : pList)
     {
@@ -122,9 +121,7 @@ void ParticleLifetime::update(const Event &ev)
             static ProperTime *t = ProperTime::instance();
             double fly = t->getDecayTime();
             p->hMean->Fill(fly);
-            cout << "Dato inserito" << endl;
         }
-
     }
     return;
 }

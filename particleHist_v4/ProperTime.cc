@@ -41,8 +41,6 @@ void ProperTime::update(const Event &ev)
   time = t;
 
   return;
-
-  cout << "Update Proper time called: " << t << endl;
 }
 
 // return particle type
