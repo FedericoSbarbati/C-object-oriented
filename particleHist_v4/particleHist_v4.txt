@@ -71,31 +71,31 @@ and   YYY is the new      class (e.g. ProperTime)
 
 ***
 In "ProperTime.h" declare a member variable "time" and a function "decayTime"
-returning it after checking for new event.
+returning it after checking for new event.  OK
 In "ProperTime.cc" in the "update" function compute the decay proper time
 from the distance "d" of the decay point from the origin using the formula:
-t = d*m/(p*c)
+t = d*m/(p*c) 
 where "m" is the invariant mass, "c" the light velocity and "p" the momentum,
 given in turn by
 p = sqrt(e^2-m^2)
 where "e" is the total energy; get the invariant mass and the total energy
-from "ParticleReco".
+from "ParticleReco". OK
 
 ***
 In "LifetimeFit.h" declare the same member variables and functions as in
 "MassMean", but remove the member variables to hold sums, mean and rms
 and the functions returning them; leave the member variables to hold
 min. and max. mass and number of events plus the function returning this
-last number.
+last number. OK
 In "LifetimeFit.cc" in the "add" function simply check if the invariant mass
 is inside the range and update the number of accepted events accordingly;
-the function "compute" can be left empty.
+the function "compute" can be left empty. OK
 
 ***
 In "ParticleLifetime.h" replace the pointer to "MassMean" with a pointer
 to "LifetimeFit" in the "Particle" struct and add two more parameters
 "timeMin" and "timeMax" to the "pCreate" function, for min. and max.
-decay proper time.
+decay proper time. OK
 In "ParticleLifetime.cc" in the "beginJob" function call "pCreate" with
 the same arguments as in "ParticleMass", plus the min. and max. time
 (use 10.0-500.0 and 10.0-1000.0 as ranges); in the "endJob" function

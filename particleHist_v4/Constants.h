@@ -9,6 +9,7 @@ public:
     static double massProton;  // GeV/c^2
     static double massK0;      // GeV/c^2
     static double massLambda0; // GeV/c^2
+    static double lightVelocity; //cm/ps
 };
 
 #endif

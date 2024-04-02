@@ -9,42 +9,43 @@
 #include "TDirectory.h"
 
 #include "Event.h"
-#include "MassMean.h"
 #include "AnalysisInfo.h"
 #include "AnalysisFactory.h"
-#include "ParticleMass.h"
-#include "ParticleReco.h"
+#include "ParticleLifetime.h"
+#include "LifetimeFit.h"
+#include "ProperTime.h"
+
 
 using namespace std;
 
-// concrete factory to create an ElementReco analyzer
-class ParticleMassFactory : public AnalysisFactory::AbsFactory
+// concrete factory to create an analyzer
+class ParticleLifetimeFactory : public AnalysisFactory::AbsFactory
 {
 public:
     // assign "plot" as name for this analyzer and factory
-    ParticleMassFactory() : AnalysisFactory::AbsFactory("plot") {}
+    ParticleLifetimeFactory() : AnalysisFactory::AbsFactory("plot") {}
     // create an ElementReco when builder is run
     AnalysisSteering *create(const AnalysisInfo *info) override
     {
-        return new ParticleMass(info);
+        return new ParticleLifetime(info);
     }
 };
 
-static ParticleMassFactory pm;
+static ParticleLifetimeFactory tm;
 
-ParticleMass::ParticleMass(const AnalysisInfo *info) : AnalysisSteering(info)
+ParticleLifetime::ParticleLifetime(const AnalysisInfo *info) : AnalysisSteering(info)
 {
 }
 
-ParticleMass::~ParticleMass()
+ParticleLifetime::~ParticleLifetime()
 {
 }
 
 
-void ParticleMass::pCreate(const string &name, float min, float max)
+void ParticleLifetime::pCreate(const string &name, float min, float max, float timeMin, float timeMax)
 {
     // create name for TH1F object
-    string label = " invariant Mass hist; M[Gev/c^{2}]; Occurrences";
+    string label = " time";
     string title = name + label;
     const char *hName = name.c_str();
     const char *hTitle = title.c_str();
@@ -55,26 +56,26 @@ void ParticleMass::pCreate(const string &name, float min, float max)
     // create TH1F and statistic objects and store their pointers
     Particle *p = new Particle;
     p->name = name;
-    p->mMean = new MassMean(min, max);
-    p->hMean = new TH1F(hName, hTitle, nBins, min, max);
-    p->hMean->SetFillColor(kBlue);
+    p->tMean = new LifetimeFit(timeMin, timeMax);
+    p->hMean = new TH1F(hName, hTitle, nBins, timeMin, timeMax);
+    p->hMean->SetFillColor(kRed);
     pList.push_back(p);
 
     return;
 }
 
-void ParticleMass::beginJob()
+void ParticleLifetime::beginJob()
 {
     pList.reserve(2);
 
     // creating Particles instances
-    pCreate("K^{0}_{s}", 0.495, 0.500);
-    pCreate("#Lambda_{0}", 1.115, 1.116);
+    pCreate("K^{0}_{s}", 0.495, 0.500,10.0,500.0);
+    pCreate("#Lambda_{0}", 1.115, 1.116,10.0,1000.0);
 
     return;
 }
 
-void ParticleMass::endJob()
+void ParticleLifetime::endJob()
 {
     // save current working area
     TDirectory *currentDir = gDirectory;
@@ -87,24 +88,14 @@ void ParticleMass::endJob()
         return;
     }
 
-    // loop over ParticleMass::Particle objects
+    // loop over ParticleLifetime::Particle objects
     for (Particle *p : pList)
     {
-        MassMean *statMean = p->mMean;
         TH1F *hist = p->hMean;
+        LifetimeFit *statMean = p->tMean;
 
         // Data evalution
         statMean->compute();
-
-        // Printing results:
-        cout << endl
-             << endl;
-        cout << "Mean: " << statMean->getMean() << endl;
-        cout << "RMS: " << statMean->getRMS() << endl;
-        cout << "Number of accepted Events: " << statMean->getNacceptedEv() << endl;
-        cout << endl
-             << endl;
-
         hist->Write();
     }
 
@@ -116,16 +107,16 @@ void ParticleMass::endJob()
     return;
 }
 
-void ParticleMass::update(const Event &ev)
+void ParticleLifetime::update(const Event &ev)
 {
     // adding event to all the MassMean instances
     for (Particle *p : pList)
     {
-        if (p->mMean->add(ev))
+        if (p->tMean->add(ev))
         {
-            static ParticleReco *ener = ParticleReco::instance();
-            double invM = ener->getParticleMass();
-            p->hMean->Fill(invM);
+            static ProperTime *t = ProperTime::instance();
+            double fly = t->getDecayTime();
+            p->hMean->Fill(fly);
         }
     }
     return;

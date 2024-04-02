@@ -5,7 +5,6 @@
 #include "ParticleReco.h"
 #include "Constants.h"
 
-double mass(const Event &ev);
 
 // constructor
 MassMean::MassMean(float min, float max) : minMass(min),
