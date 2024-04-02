@@ -13,8 +13,8 @@
 #include "AnalysisInfo.h"
 #include "AnalysisFactory.h"
 #include "ParticleMass.h"
+#include "ParticleReco.h"
 
-double mass(const Event &ev);
 using namespace std;
 
 // concrete factory to create an ElementReco analyzer
@@ -40,7 +40,7 @@ ParticleMass::~ParticleMass()
 {
 }
 
-// create objects for a Bragg curve
+
 void ParticleMass::pCreate(const string &name, float min, float max)
 {
     // create name for TH1F object
@@ -123,7 +123,8 @@ void ParticleMass::update(const Event &ev)
     {
         if (p->mMean->add(ev))
         {
-            double invM = mass(ev);
+            static ParticleReco *ener = ParticleReco::instance();
+            double invM = ener->getParticleMass();
             p->hMean->Fill(invM);
         }
     }

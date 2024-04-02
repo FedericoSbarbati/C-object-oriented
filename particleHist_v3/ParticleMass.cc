@@ -40,7 +40,6 @@ ParticleMass::~ParticleMass()
 {
 }
 
-// create objects for a Bragg curve
 void ParticleMass::pCreate(const string &name, float min, float max)
 {
     // create name for TH1F object

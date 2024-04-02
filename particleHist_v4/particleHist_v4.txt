@@ -43,7 +43,7 @@ Create a class "ParticleReco" to compute total energy and invariant mass:
 ***
 In "MassMean.cc" and "ParticleMass.cc" get the invariant mass from
 "ParticleReco" by getting the instance of it and calling the function
-returning the invariant mass.
+returning the invariant mass. OK
 
 ***
 In "ParticleMass.cc" name the histogram as "mass" followed by the name

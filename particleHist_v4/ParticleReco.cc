@@ -116,7 +116,7 @@ se no manda un warning recursive call.
 */
 
 // return particle type
-  ParticleReco::ParticleType ParticleReco::getParticleType()
+  ParticleReco::ParticleType ParticleReco::getParticleType() 
   {
     // check for new event and return result
     check();
@@ -125,7 +125,7 @@ se no manda un warning recursive call.
     }
 
 // return particle energy
-double ParticleReco::getParticleEnergy()
+double ParticleReco::getParticleEnergy() 
 {
     // check for new event and return result
     check();
@@ -133,7 +133,7 @@ double ParticleReco::getParticleEnergy()
     }
 
 // return particle mass
-double ParticleReco::getParticleMass()
+double ParticleReco::getParticleMass() 
 {
   // check for new event and return result
   check();
