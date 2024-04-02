@@ -22,8 +22,8 @@ using namespace std;
 class ParticleLifetimeFactory : public AnalysisFactory::AbsFactory
 {
 public:
-    // assign "plot" as name for this analyzer and factory
-    ParticleLifetimeFactory() : AnalysisFactory::AbsFactory("plot") {}
+    // assign "plot" as name for this analyzer and factory (changed plot key with time)
+    ParticleLifetimeFactory() : AnalysisFactory::AbsFactory("time") {}
     // create an ElementReco when builder is run
     AnalysisSteering *create(const AnalysisInfo *info) override
     {
@@ -80,10 +80,10 @@ void ParticleLifetime::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFile *file = new TFile(aInfo->value("plot").c_str(), "CREATE"); // RECREATE
+    TFile *file = new TFile(aInfo->value("time").c_str(), "CREATE"); // RECREATE
     if (file->IsZombie())
     {
-        cerr << "Error opening file with name: " << aInfo->value("plot") << endl;
+        cerr << "Error opening file with name: " << aInfo->value("time") << endl;
         delete file;
         return;
     }

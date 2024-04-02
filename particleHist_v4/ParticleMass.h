@@ -5,7 +5,7 @@
 #include <string>
 
 #include "AnalysisSteering.h"
-#include "ActiveObserver.h"
+#include "util/include/ActiveObserver.h"
 #include "TH1F.h"
 
 class Event;

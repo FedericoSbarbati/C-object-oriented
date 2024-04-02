@@ -2,7 +2,7 @@
 #define EventDump_h
 
 #include "AnalysisSteering.h"
-#include "ActiveObserver.h"
+#include "util/include/ActiveObserver.h"
 
 class AnalysisInfo;
 class Event;

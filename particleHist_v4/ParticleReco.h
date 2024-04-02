@@ -3,8 +3,8 @@
 
 #include "Event.h"
 
-#include "Singleton.h"
-#include "LazyObserver.h"
+#include "util/include/Singleton.h"
+#include "util/include/LazyObserver.h"
 
 class ParticleReco : public Singleton<ParticleReco>,
                      public LazyObserver<Event>
