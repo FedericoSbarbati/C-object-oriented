@@ -5,9 +5,11 @@
 #include "ParticleReco.h"
 #include "Constants.h"
 
+using namespace std;
+
 // constructor
 LifetimeFit::LifetimeFit(float min, float max) : minMass(min),
-                                           maxMass(max)
+                                                 maxMass(max)
 // initializations
 {
   nAccepted = 0;
@@ -22,18 +24,23 @@ LifetimeFit::~LifetimeFit()
 bool LifetimeFit::add(const Event &ev)
 {
   static ParticleReco *ener = ParticleReco::instance();
-   double invMass = ener->getParticleMass();
+  double invMass = ener->getParticleMass();
+
+  cout << "Lifetimefit::Add -Inv mass: " << invMass;
   // Check masses range
   if (invMass >= minMass && invMass <= maxMass)
   {
+    cout << " - Risultato true" << endl;
     nAccepted++;
     return true;
   }
   else
+  {
+        cout << " - Risultato false" << endl;
     return false;
+  }
 }
 
-// compute mean and rms
 void LifetimeFit::compute()
 {
   return;
@@ -43,4 +50,3 @@ int LifetimeFit::getNacceptedEv() const
 {
   return nAccepted;
 }
-
