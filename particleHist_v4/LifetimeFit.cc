@@ -36,6 +36,7 @@ bool LifetimeFit::add(const Event &ev)
 // compute mean and rms
 void LifetimeFit::compute()
 {
+  return;
 }
 
 int LifetimeFit::getNacceptedEv() const

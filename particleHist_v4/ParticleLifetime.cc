@@ -7,6 +7,7 @@
 #include "TH1F.h"
 #include "TFile.h"
 #include "TDirectory.h"
+#include "util/include/TFileProxy.h"
 
 #include "Event.h"
 #include "AnalysisInfo.h"
@@ -14,7 +15,6 @@
 #include "ParticleLifetime.h"
 #include "LifetimeFit.h"
 #include "ProperTime.h"
-
 
 using namespace std;
 
@@ -40,7 +40,6 @@ ParticleLifetime::ParticleLifetime(const AnalysisInfo *info) : AnalysisSteering(
 ParticleLifetime::~ParticleLifetime()
 {
 }
-
 
 void ParticleLifetime::pCreate(const string &name, float min, float max, float timeMin, float timeMax)
 {
@@ -69,8 +68,8 @@ void ParticleLifetime::beginJob()
     pList.reserve(2);
 
     // creating Particles instances
-    pCreate("K^{0}_{s}", 0.495, 0.500,10.0,500.0);
-    pCreate("#Lambda_{0}", 1.115, 1.116,10.0,1000.0);
+    pCreate("K0", 0.495, 0.500, 10.0, 500.0);
+    pCreate("LAMBDA0", 1.115, 1.116, 10.0, 1000.0);
 
     return;
 }
@@ -80,8 +79,8 @@ void ParticleLifetime::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFile *file = new TFile(aInfo->value("time").c_str(), "CREATE"); // RECREATE
-    if (file->IsZombie())
+    TFileProxy* file = new TFileProxy(aInfo->value("time").c_str(), "CREATE"); // RECREATE
+    if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("time") << endl;
         delete file;
@@ -89,13 +88,18 @@ void ParticleLifetime::endJob()
     }
 
     // loop over ParticleLifetime::Particle objects
-    for (Particle *p : pList)
+    for (ParticleLifetime::Particle *p : pList)
     {
         TH1F *hist = p->hMean;
         LifetimeFit *statMean = p->tMean;
 
         // Data evalution
         statMean->compute();
+
+        // Printing results
+        cout << "N accepted events: " << p->tMean->getNacceptedEv() << endl;
+
+        // Writing histogram
         hist->Write();
     }
 

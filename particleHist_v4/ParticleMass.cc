@@ -7,6 +7,7 @@
 #include "TH1F.h"
 #include "TFile.h"
 #include "TDirectory.h"
+#include "util/include/TFileProxy.h"
 
 #include "Event.h"
 #include "MassMean.h"
@@ -68,8 +69,8 @@ void ParticleMass::beginJob()
     pList.reserve(2);
 
     // creating Particles instances
-    pCreate("K^{0}_{s}", 0.495, 0.500);
-    pCreate("#Lambda_{0}", 1.115, 1.116);
+    pCreate("K0", 0.495, 0.500);
+    pCreate("LAMBDA0", 1.115, 1.116);
 
     return;
 }
@@ -79,8 +80,8 @@ void ParticleMass::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFile *file = new TFile(aInfo->value("plot").c_str(), "CREATE"); // RECREATE
-    if (file->IsZombie())
+    TFileProxy* file = new TFileProxy(aInfo->value("plot").c_str(), "CREATE"); // RECREATE
+    if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("plot") << endl;
         delete file;
