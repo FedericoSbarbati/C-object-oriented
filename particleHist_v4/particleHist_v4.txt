@@ -47,11 +47,11 @@ returning the invariant mass. OK
 
 ***
 In "ParticleMass.cc" name the histogram as "mass" followed by the name
-given as first parameter in the "pCreate" function.
+given as first parameter in the "pCreate" function. DONE DIFFERENT
 
 ***
 Modify the "main" function and replace the event loop with a call to 
-the "run" function in the "EventSource".
+the "run" function in the "EventSource". OK
 
 **** Part B ****
 
