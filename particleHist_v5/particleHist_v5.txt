@@ -73,7 +73,7 @@ So, in the "compute" function, do the following:
   over all the elements of the std::vector of all the decay times,
 - call the "add" function giving as parameters t_s and L(t_s)
 Then get mean lifetime and error using the formula given above, 
-getting a, b and c from the functions "a", "b" and "c" of "QuadraticFitter".
+getting a, b and c from the functions "a", "b" and "c" of "QuadraticFitter". OK
  
 ***
 In "ParticleLifetime.h,cc"
