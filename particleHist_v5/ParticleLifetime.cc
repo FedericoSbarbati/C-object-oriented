@@ -113,13 +113,11 @@ void ParticleLifetime::endJob()
         statMean->compute();
 
         // Printing results
-        cout << endl
-             << endl;
+        cout << endl;
         cout << "For particle: " << p->name << endl;
         cout << "Mean lifetime: " << statMean->getLifeTime() << " +/- " << statMean->getLifeTimeError() << endl;
         cout << "N accepted events: " << p->tMean->getNacceptedEv() << endl;
-        cout << endl
-             << endl;
+        cout << endl;
 
         // Writing histogram
         hist->Write();

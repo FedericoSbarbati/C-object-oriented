@@ -109,14 +109,12 @@ void ParticleMass::endJob()
         statMean->compute();
 
         // Printing results:
-        cout << endl
-             << endl;
+        cout << endl;
         cout << "Particle: " << p->name << endl;
         cout << "Mean: " << statMean->getMean() << endl;
         cout << "RMS: " << statMean->getRMS() << endl;
         cout << "Number of accepted Events: " << statMean->getNacceptedEv() << endl;
-        cout << endl
-             << endl;
+        cout << endl;
 
         hist->Write();
     }

@@ -4,6 +4,7 @@
 #include "LifetimeFit.h"
 #include "Event.h"
 #include "ProperTime.h"
+#include "ParticleReco.h"
 #include "Constants.h"
 
 using namespace std;
@@ -26,69 +27,22 @@ LifetimeFit::~LifetimeFit()
 }
 
 // add data from a new event
-/*
-- in the "add" function get the decay time from "ProperTime" and,
-  if it's inside the [min,max] range, save it in the std::vector of all the
-  decay times,
-*/
 bool LifetimeFit::add(const Event &ev)
 {
+  static ParticleReco *pr = ParticleReco::instance();
   static ProperTime *pt = ProperTime::instance();
+  double m = pr->getParticleMass();
   double dt = pt->getDecayTime();
-  if (dt >= minTime && dt <= maxTime)
+
+  if (m >= minMass && m <= maxMass)
   {
-    decayTimes.push_back(dt);
-    return true;
-  }
-  else
-    return false;
-}
-
-// Calcolate the mean and the RMS of the decay times
-void LifetimeFit::compute()
-{
-  // Create an instance of QuadraticFitter
-  QuadraticFitter fitter;
-
-  // Define the minimum, maximum, and step size for the scan
-  double t_min = minScan;
-  double t_max = maxScan;
-  double t_step = scanStep;
-
-  // Loop over the scan range
-  for (double t_s = t_min; t_s <= t_max; t_s += t_step)
-  {
-    // Initialize the likelihood (L) to zero
-    double L = 0.0;
-
-    // Loop over all decay times
-    for (int i = 0; i < (int)decayTimes.size(); i++)
+    if (dt >= minTime && dt <= maxTime)
     {
-      // Get the i-th decay time
-      double t_i = decayTimes[i];
-
-      // Update the likelihood based on the current decay time and scan value
-      L += (t_i / t_s) + log(t_s) + log(exp(-t_min / t_s) - exp(-t_max / t_s));
+      decayTimes.push_back(dt);
+      return true;
     }
-
-    // Add the scan value and likelihood to the fitter
-    fitter.add(t_s, L);
   }
-
-  // Get the coefficients of the fitted quadratic function
-  //double a = fitter.a();
-  double b = fitter.b();
-  double c = fitter.c();
-
-  // Calculate the mean lifetime (t) and its error
-  double t = -b / (2 * c);
-  double error = 1 / sqrt(2 * c);
-
-  // Store the mean lifetime and its error
-  ltMean = t;
-  ltRMS = error;
-
-  return;
+  return false;
 }
 
 // Get methods of the class
@@ -104,3 +58,48 @@ double LifetimeFit::getLifeTimeError() const
 {
   return ltRMS;
 }
+
+// Calcolate the mean and the RMS of the decay times
+void LifetimeFit::compute()
+{
+  // Create an instance of QuadraticFitter
+  QuadraticFitter fitter;
+
+  // Loop over the scan range
+  for (double t_s = minScan; t_s < maxScan; t_s += scanStep)
+  {
+    // Initialize the likelihood (L) to zero
+    double L = 0.0;
+    double t_i = 0.0;
+
+    // Loop over all decay times
+    for (unsigned int i = 0; i < decayTimes.size(); i++)
+    {
+      // Get the i-th decay time
+      t_i = decayTimes[i];
+
+      // Update the likelihood based on the current decay time and scan value
+      L += (t_i / t_s) + log(t_s) + log(exp(-minTime / t_s) - exp(-maxTime / t_s));
+    }
+
+    // Add the scan value and likelihood to the fitter
+    fitter.add(t_s, L);
+  }
+
+  // Get the coefficients of the fitted quadratic function
+  double a = fitter.a();
+  double b = fitter.b();
+  double c = fitter.c();
+  cout << endl;
+  cout << "Min scan = " << minScan << ", max scan = " << maxScan << ", scan step = " << scanStep << endl;
+  cout << "a = " << a << ", b = " << b << ", c = " << c << endl;
+
+  // Calculate the mean lifetime (t) and its error
+  ltMean = -b / (2. * c);
+  // double error = c > 0.0 ? 1.0 / sqrt(2.0 * c) : 0.0;
+  ltRMS = 1. / sqrt(2. * c);
+
+  return;
+}
+
+
