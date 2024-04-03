@@ -76,7 +76,7 @@ void LifetimeFit::compute()
   }
 
   // Get the coefficients of the fitted quadratic function
-  double a = fitter.a();
+  //double a = fitter.a();
   double b = fitter.b();
   double c = fitter.c();
 

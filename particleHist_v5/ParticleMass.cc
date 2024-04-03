@@ -69,6 +69,11 @@ void ParticleMass::beginJob()
     pList.reserve(10);
     // create energy distributions for different mass ranges
     ifstream file(aInfo->value("ranges").c_str());
+    if (!file.is_open())
+    {
+        cerr << "Error opening file with name: " << aInfo->value("ranges") << endl;
+        return;
+    }
     string name;
     float eMin;
     float eMax;
@@ -86,7 +91,7 @@ void ParticleMass::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFileProxy *file = new TFileProxy(aInfo->value("plot").c_str(), "CREATE"); // RECREATE
+    TFileProxy *file = new TFileProxy(aInfo->value("plot").c_str(), "RECREATE"); // RECREATE
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("plot") << endl;
@@ -106,6 +111,7 @@ void ParticleMass::endJob()
         // Printing results:
         cout << endl
              << endl;
+        cout << "Particle: " << p->name << endl;
         cout << "Mean: " << statMean->getMean() << endl;
         cout << "RMS: " << statMean->getRMS() << endl;
         cout << "Number of accepted Events: " << statMean->getNacceptedEv() << endl;

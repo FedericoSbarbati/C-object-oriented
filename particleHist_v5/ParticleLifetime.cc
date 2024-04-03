@@ -67,6 +67,11 @@ void ParticleLifetime::beginJob()
 {
     pList.reserve(10);
     ifstream file(aInfo->value("fitters").c_str());
+    if (!file.is_open())
+    {
+        cerr << "Error opening file with name: " << aInfo->value("ranges") << endl;
+        return;
+    }
     string name;
     double minMass;
     double maxMass;
@@ -90,7 +95,7 @@ void ParticleLifetime::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "CREATE"); // RECREATE
+    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "RECREATE"); // RECREATE
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("time") << endl;
@@ -108,8 +113,13 @@ void ParticleLifetime::endJob()
         statMean->compute();
 
         // Printing results
+        cout << endl
+             << endl;
+        cout << "For particle: " << p->name << endl;
         cout << "Mean lifetime: " << statMean->getLifeTime() << " +/- " << statMean->getLifeTimeError() << endl;
         cout << "N accepted events: " << p->tMean->getNacceptedEv() << endl;
+        cout << endl
+             << endl;
 
         // Writing histogram
         hist->Write();

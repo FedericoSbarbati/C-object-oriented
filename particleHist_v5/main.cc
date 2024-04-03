@@ -8,29 +8,27 @@
 
 using namespace std;
 
-int main( int argc, char* argv[] ) {
+int main(int argc, char *argv[])
+{
 
   // store command line parameters
-  AnalysisInfo* info = new AnalysisInfo( argc, argv );
+  AnalysisInfo *info = new AnalysisInfo(argc, argv);
 
   // create data source
-  EventSource* es = SourceFactory::create( info );
+  EventSource *es = SourceFactory::create(info);
 
   // create a list of analyzers
-  AnalysisFactory::create( info );
+  AnalysisFactory::create(info);
 
   // initialize all analyzers
-  Dispatcher<AnalysisInfo::AnalysisStatus>::notify( AnalysisInfo::begin );
+  Dispatcher<AnalysisInfo::AnalysisStatus>::notify(AnalysisInfo::begin);
 
   // loop over events
   es->run();
 
   // finalize all analyzers
-  Dispatcher<AnalysisInfo::AnalysisStatus>::notify( AnalysisInfo::end );
+  Dispatcher<AnalysisInfo::AnalysisStatus>::notify(AnalysisInfo::end);
 
   delete es;
-
   return 0;
-
 }
-
