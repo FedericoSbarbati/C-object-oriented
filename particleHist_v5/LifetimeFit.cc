@@ -34,14 +34,14 @@ LifetimeFit::~LifetimeFit()
 bool LifetimeFit::add(const Event &ev)
 {
   static ProperTime *pt = ProperTime::instance();
-  double decayTime = pt->getDecayTime();
-  if (decayTime >= minTime && decayTime <= maxTime)
+  double dt = pt->getDecayTime();
+  if (dt >= minTime && dt <= maxTime)
   {
-    decayTimes.push_back(decayTime);
+    decayTimes.push_back(dt);
     return true;
   }
   else
-    return;
+    return false;
 }
 
 // Calcolate the mean and the RMS of the decay times
@@ -62,7 +62,7 @@ void LifetimeFit::compute()
     double L = 0.0;
 
     // Loop over all decay times
-    for (int i = 0; i < decayTimes.size(); i++)
+    for (int i = 0; i < (int)decayTimes.size(); i++)
     {
       // Get the i-th decay time
       double t_i = decayTimes[i];

@@ -1,6 +1,8 @@
 #ifndef LifetimeFit_h
 #define LifetimeFit_h
 
+#include <vector>
+
 class Event;
 class ParticleReco;
 
@@ -32,7 +34,7 @@ private:
   double maxScan;
   double scanStep; // scan step
 
-  vector<double> decayTimes;
+  std::vector<double> decayTimes;
 
   double ltMean;
   double ltRMS;
