@@ -7,14 +7,14 @@
 Use the "Utilities" package already downloaded in version 4
 
 ***
-In "AnalysisSteering.h" remove the "process" function declaration.
+In "AnalysisSteering.h" remove the "process" function declaration. OK
 
 ***
 Take the following from braggPlot_v5 (and look at the differences with 
 the v4 version):
 - the new version of "AnalysisInfo.h",
 - the new version of "AnalysisSteering.h,cc",
-- the new version of "main.cc".
+- the new version of "main.cc". OK
 
 ***
 In the "main" program handle begin/end job by dispatching
@@ -89,13 +89,13 @@ main                   modify Hist_v4 or copy braggPlot_v5
 ********* final list of classes   *********
 
                        .h                            .cc
-AnalysisInfo           copy   braggPlot_v5           copy   Hist_v4
-AnalysisSteering       copy   braggPlot_v5           copy   braggPlot_v5
-AnalysisFactory        copy   Hist_v4                copy   Hist_v4
-SourceFactory          copy   Hist_v4                copy   Hist_v4
-Event                  copy   Hist_v4                copy   Hist_v4
-EventSource            copy   Hist_v4                copy   Hist_v4
-EventReadFromFile      copy   Hist_v4                copy   Hist_v4
+AnalysisInfo           copy   braggPlot_v5           copy   Hist_v4 OK
+AnalysisSteering       copy   braggPlot_v5           copy   braggPlot_v5  OK
+AnalysisFactory        copy   Hist_v4                copy   Hist_v4 OK
+SourceFactory          copy   Hist_v4                copy   Hist_v4 OK
+Event                  copy   Hist_v4                copy   Hist_v4 OK
+EventSource            copy   Hist_v4                copy   Hist_v4 OK
+EventReadFromFile      copy   Hist_v4                copy   Hist_v4 OK
 EventSim               copy   Hist_v4                copy   Hist_v4
 EventDump              copy   Hist_v4                copy   Hist_v4
 ParticleMass           copy   Hist_v4                modify Hist_v4
