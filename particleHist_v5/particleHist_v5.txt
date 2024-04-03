@@ -80,7 +80,7 @@ In "ParticleLifetime.h,cc"
 - get the mass and time ranges plus the fit parameters from text file 
   ("particleFitters"), and change the parameters of the "pCreate" function
   to handle the increased number of parameters needed by the LifetimeFit 
-  constructor.
+  constructor. OK
 
 ********* final list of functions *********
 

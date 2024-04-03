@@ -43,7 +43,7 @@ private:
     };
     std::vector<Particle *> pList;
     // function to create a "decay mode"
-    void pCreate(const std::string &name, float min, float max, float timeMin, float timeMax);
+    void pCreate(const std::string &name, double minMass, double maxMass, double minTime, double maxTime, double minScan, double maxScan, double scanStep);
 };
 
 #endif

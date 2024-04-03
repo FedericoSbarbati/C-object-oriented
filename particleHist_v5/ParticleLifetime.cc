@@ -41,7 +41,7 @@ ParticleLifetime::~ParticleLifetime()
 {
 }
 
-void ParticleLifetime::pCreate(const string &name, float min, float max, float timeMin, float timeMax)
+void ParticleLifetime::pCreate(const string &name, double minMass, double maxMass, double minTime, double maxTime, double minScan, double maxScan, double scanStep)
 {
     // create name for TH1F object
     string label = " time";
@@ -55,8 +55,8 @@ void ParticleLifetime::pCreate(const string &name, float min, float max, float t
     // create TH1F and statistic objects and store their pointers
     Particle *p = new Particle;
     p->name = name;
-    p->tMean = new LifetimeFit(min, max);
-    p->hMean = new TH1F(hName, hTitle, nBins, timeMin, timeMax);
+    p->tMean = new LifetimeFit(minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep); // ADJUST
+    p->hMean = new TH1F(hName, hTitle, nBins, minTime, maxTime);
     p->hMean->SetFillColor(kRed);
     pList.push_back(p);
 
@@ -65,11 +65,22 @@ void ParticleLifetime::pCreate(const string &name, float min, float max, float t
 
 void ParticleLifetime::beginJob()
 {
-    pList.reserve(2);
-
-    // creating Particles instances
-    pCreate("K0", 0.495, 0.500, 10.0, 500.0);
-    pCreate("LAMBDA0", 1.115, 1.116, 10.0, 1000.0);
+    pList.reserve(10);
+    ifstream file(aInfo->value("fitters").c_str());
+    string name;
+    double minMass;
+    double maxMass;
+    double minTime;
+    double maxTime;
+    double minScan;
+    double maxScan;
+    double scanStep;
+    while (file >> name >> minMass >> maxMass >> minTime >> maxTime >> minScan >> maxScan >> scanStep)
+    {
+        // creating Particles instances
+        pCreate(name, minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep);
+    }
+    file.close();
 
     return;
 }
