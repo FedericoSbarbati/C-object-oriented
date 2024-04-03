@@ -1,0 +1,9 @@
+To run the example:
+
+main sim 100 ...                    # to generate 100 events
+main input file                     # to read 100 events from file, binary form
+main input file imode a             # to read 100 events from file, text form
+
+main ..... dump                     # to dump data on std out
+main ..... dump ofile file          # to dump data on file, text form
+main ..... dump ofile file omode b  # to dump data on file, binary form
