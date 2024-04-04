@@ -15,33 +15,37 @@ class ParticleMass : public AnalysisSteering
 {
 
 public:
+    // Constructor
     ParticleMass(const AnalysisInfo *info);
-    // deleted copy constructor and assignment to prevent unadvertent copy
+
+    // Deleted copy constructor and assignment to prevent unintended copy
     ParticleMass(const ParticleMass &x) = delete;
     ParticleMass &operator=(const ParticleMass &x) = delete;
 
+    // Destructor
     ~ParticleMass() override;
 
-    // function to be called at execution start
+    // Function to be called at execution start
     void beginJob() override;
 
-    // function to be called at execution end
+    // Function to be called at execution end
     void endJob() override;
 
-    // function to be called for each event
+    // Function to be called for each event
     void process(const Event &ev) override;
 
 private:
-
     // Particle struct to hold analysis objects
     struct Particle
     {
         std::string name;
-        MassMean *mMean; // statistic object
-        TH1F *hMean;     // graph
+        MassMean *mMean; // Statistic object
+        TH1F *hMean;     // Graph
     };
-    std::vector<Particle *> pList;
-    // function to create a "decay mode"
+
+    std::vector<Particle *> pList; // List of particles
+
+    // Function to create a "decay mode"
     void pCreate(const std::string &name, float min, float max);
 };
 

@@ -1,7 +1,7 @@
+#include <iostream>
+
 #include "AnalysisFactory.h"
 #include "AnalysisInfo.h"
-
-#include <iostream>
 
 using namespace std;
 
@@ -23,7 +23,7 @@ vector<AnalysisSteering *> AnalysisFactory::create(const AnalysisInfo *info)
   {
     // create analysis object if its name is listed in the command line
     if (info->contains(element.first))
-      aList.push_back(element.second->create(info)); //Create an AnalysisSteering object by the function in the AbstractClass
+      aList.push_back(element.second->create(info)); // Create an AnalysisSteering object by the function in the AbstractClass
   }
   return aList;
 }

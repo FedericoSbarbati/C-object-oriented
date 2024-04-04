@@ -1,0 +1,6 @@
+rm -f main
+c++ -Wall -I. `root-config --cflags` -o main *cc `root-config --libs`
+
+./main input particle_events.txt dump
+./main input particle_events.txt plot prova.root
+./main sim 2000 plot prova_sim.root

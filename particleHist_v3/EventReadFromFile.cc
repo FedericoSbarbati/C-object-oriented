@@ -27,21 +27,27 @@ const Event *EventReadFromFile::get()
 // read an event
 const Event *EventReadFromFile::readFile()
 {
-
   Event *ev;
   int id;
   int nP;
   float x, y, z;
+
+  // Read the event ID
   if (!(*file >> id))
   {
     return nullptr;
   }
+
+  // Read the event position
   *file >> x >> y >> z;
+
+  // Read the number of particles
   *file >> nP;
 
+  // Create a new event object
   ev = new Event(id, x, y, z);
 
-  // Allocazione dinamica delle particelle tramite metodo add:
+  // Read particle data and add particles to the event
   int charge;
   float px, py, pz;
   for (int i = 0; i < nP; ++i)
