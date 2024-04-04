@@ -32,6 +32,8 @@ public:
   float getX() const;
   float getY() const;
   float getZ() const;
+
+  // get number of particles
   int getnParticle() const;
 
   // get particle
