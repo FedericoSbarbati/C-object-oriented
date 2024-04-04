@@ -2,7 +2,6 @@
 #define ProperTime_h
 
 #include "AnalysisFramework/Event.h"
-
 #include "util/include/Singleton.h"
 #include "util/include/LazyObserver.h"
 
