@@ -3,6 +3,7 @@
 
 using namespace std;
 
+// Function prototypes
 int read(ifstream &file,
          float &x, float &y, float &z,
          int *charge,
@@ -19,13 +20,15 @@ int main(int argc, char *argv[])
     // Open input file
     const char *name = argv[1];
     ifstream file(name, std::ios::binary);
+
+    // Check if file opened successfully
     if (!file)
     {
-        cerr << "Errore nell'apertura del file: " << name << endl;
+        cerr << "Error opening file: " << name << endl;
         return 1;
     }
 
-    // Declaring event variables
+    // Declare variables for event data
     int evNumber;
     int nParticles;
     float x;
@@ -36,10 +39,12 @@ int main(int argc, char *argv[])
     float py[10];
     float pz[10];
 
-    // Loop over events
+    // Loop over events in the file
     while (file >> evNumber)
     {
+        // Read event data from file
         nParticles = read(file, x, y, z, charges, px, py, pz);
+        // Dump event data to console
         dump(evNumber, nParticles, x, y, z, charges, px, py, pz);
     }
 
