@@ -108,14 +108,3 @@ LifetimeFit            modify Hist_v4                modify Hist_v4
 ParticleLifetime       modify Hist_v4                modify Hist_v4
 QuadraticFitter        done                          done
 
-
-To compile:
-
-export CORSOCXX_UTIL=${HOME}/C-object-oriented/
-c++ -Wall -I. -I ${CORSOCXX_UTIL} `root-config --cflags` -o main *cc `root-config --libs`
-
-To execute:
-
-./main input particle_events.txt dump
-./main input particle_events.txt ranges massRanges fitters particleFitters plot hist.root 
-./main input particle_events.txt ranges massRanges fitters particleFitters time hist.root 

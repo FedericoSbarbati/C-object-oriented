@@ -11,7 +11,10 @@ class LifetimeFit
 
 public:
   // constructor
-  LifetimeFit(double minMass, double maxMass, double minTime, double maxTime, double minScan, double maxScan, double scanStep);
+  LifetimeFit(double minMass, double maxMass,
+              double minTime, double maxTime,
+              double minScan, double maxScan,
+              double scanStep);
   // destructor
   ~LifetimeFit();
 
@@ -24,7 +27,7 @@ public:
   double getLifeTimeError() const; // return lifetime error
 
 private:
-  double minMass; 
+  double minMass;
   double maxMass; // Mass range
 
   double minTime;

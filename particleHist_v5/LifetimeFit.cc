@@ -10,14 +10,16 @@
 using namespace std;
 
 // constructor
-LifetimeFit::LifetimeFit(double minMass, double maxMass, double minTime, double maxTime,
-                         double minScan, double maxScan, double scanStep) : minMass(minMass),
-                                                                            maxMass(maxMass),
-                                                                            minTime(minTime),
-                                                                            maxTime(maxTime),
-                                                                            minScan(minScan),
-                                                                            maxScan(maxScan),
-                                                                            scanStep(scanStep)
+LifetimeFit::LifetimeFit(double minMass, double maxMass,
+                         double minTime, double maxTime,
+                         double minScan, double maxScan,
+                         double scanStep) : minMass(minMass),
+                                            maxMass(maxMass),
+                                            minTime(minTime),
+                                            maxTime(maxTime),
+                                            minScan(minScan),
+                                            maxScan(maxScan),
+                                            scanStep(scanStep)
 {
 }
 
@@ -87,7 +89,7 @@ void LifetimeFit::compute()
   }
 
   // Get the coefficients of the fitted quadratic function
-  //double a = fitter.a();
+  // double a = fitter.a();
   double b = fitter.b();
   double c = fitter.c();
 

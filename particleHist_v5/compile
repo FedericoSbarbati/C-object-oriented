@@ -1,0 +1,8 @@
+#!/bin/sh
+rm -f main
+export CORSOCXX_UTIL=${HOME}/C-object-oriented/
+c++ -Wall -I. -I ${CORSOCXX_UTIL} `root-config --cflags` -o main *cc `root-config --libs`
+
+./main input particle_events.txt ranges massRanges plot massHisto_input.root
+./main input particle_events.txt fit particleFitters time timeHisto_input.root
+./main input particle_events.txt fit particleFitters ranges massRanges plot histo_input.root time histo_input.root

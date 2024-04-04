@@ -91,7 +91,7 @@ void ParticleMass::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFileProxy *file = new TFileProxy(aInfo->value("plot").c_str(), "RECREATE"); // RECREATE
+    TFileProxy *file = new TFileProxy(aInfo->value("plot").c_str(), "RECREATE"); 
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("plot") << endl;

@@ -22,9 +22,9 @@ using namespace std;
 class ParticleLifetimeFactory : public AnalysisFactory::AbsFactory
 {
 public:
-    // assign "plot" as name for this analyzer and factory (changed plot key with time)
+    // assign "time" as name for this analyzer and factory
     ParticleLifetimeFactory() : AnalysisFactory::AbsFactory("time") {}
-    // create an ElementReco when builder is run
+    // create a ParticleLifeTime when builder is run
     AnalysisSteering *create(const AnalysisInfo *info) override
     {
         return new ParticleLifetime(info);
@@ -41,10 +41,14 @@ ParticleLifetime::~ParticleLifetime()
 {
 }
 
-void ParticleLifetime::pCreate(const string &name, double minMass, double maxMass, double minTime, double maxTime, double minScan, double maxScan, double scanStep)
+void ParticleLifetime::pCreate(const string &name,
+                               double minMass, double maxMass,
+                               double minTime, double maxTime,
+                               double minScan, double maxScan,
+                               double scanStep)
 {
     // create name for TH1F object
-    string label = " time";
+    string label = " decay time hist; T[ns]; Occurrences";
     string title = name + label;
     const char *hName = name.c_str();
     const char *hTitle = title.c_str();
@@ -55,7 +59,10 @@ void ParticleLifetime::pCreate(const string &name, double minMass, double maxMas
     // create TH1F and statistic objects and store their pointers
     Particle *p = new Particle;
     p->name = name;
-    p->tMean = new LifetimeFit(minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep); 
+    p->tMean = new LifetimeFit(minMass, maxMass,
+                               minTime, maxTime,
+                               minScan, maxScan,
+                               scanStep);
     p->hMean = new TH1F(hName, hTitle, nBins, minTime, maxTime);
     p->hMean->SetFillColor(kRed);
     pList.push_back(p);
@@ -68,7 +75,7 @@ void ParticleLifetime::beginJob()
     pList.reserve(10);
 
     // Opening file with fitting informations
-    ifstream file(aInfo->value("fitters").c_str());
+    ifstream file(aInfo->value("fit").c_str());
     if (!file.is_open())
     {
         cerr << "Error opening file with name: " << aInfo->value("ranges") << endl;
@@ -85,7 +92,10 @@ void ParticleLifetime::beginJob()
     while (file >> name >> minMass >> maxMass >> minTime >> maxTime >> minScan >> maxScan >> scanStep)
     {
         // creating Particles instances
-        pCreate(name, minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep);
+        pCreate(name,
+                minMass, maxMass,
+                minTime, maxTime,
+                minScan, maxScan, scanStep);
     }
     file.close();
 
@@ -97,7 +107,7 @@ void ParticleLifetime::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "RECREATE"); // changed plot key with time
+    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "RECREATE");
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("time") << endl;
