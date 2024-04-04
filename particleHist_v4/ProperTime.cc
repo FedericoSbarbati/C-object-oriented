@@ -1,10 +1,11 @@
+#include <iostream>
+#include <cmath>
+
 #include "ProperTime.h"
 #include "Event.h"
 #include "Utilities.h"
 #include "Constants.h"
 #include "ParticleReco.h"
-#include <iostream>
-#include <cmath>
 
 using namespace std;
 

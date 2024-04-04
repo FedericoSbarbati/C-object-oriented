@@ -24,6 +24,7 @@ class ParticleMassFactory : public AnalysisFactory::AbsFactory
 public:
     // assign "plot" as name for this analyzer and factory
     ParticleMassFactory() : AnalysisFactory::AbsFactory("plot") {}
+
     // create an ElementReco when builder is run
     AnalysisSteering *create(const AnalysisInfo *info) override
     {
@@ -40,7 +41,6 @@ ParticleMass::ParticleMass(const AnalysisInfo *info) : AnalysisSteering(info)
 ParticleMass::~ParticleMass()
 {
 }
-
 
 void ParticleMass::pCreate(const string &name, float min, float max)
 {
@@ -79,8 +79,9 @@ void ParticleMass::endJob()
 {
     // save current working area
     TDirectory *currentDir = gDirectory;
+
     // open histogram file
-    TFileProxy* file = new TFileProxy(aInfo->value("plot").c_str(), "CREATE"); // RECREATE
+    TFileProxy* file = new TFileProxy(aInfo->value("plot").c_str(), "RECREATE"); 
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("plot") << endl;
@@ -94,23 +95,23 @@ void ParticleMass::endJob()
         MassMean *statMean = p->mMean;
         TH1F *hist = p->hMean;
 
-        // Data evalution
+        // Data evaluation
         statMean->compute();
 
         // Printing results:
-        cout << endl
-             << endl;
+        cout << endl;
+        cout << "Particle: " << p->name << endl;
         cout << "Mean: " << statMean->getMean() << endl;
         cout << "RMS: " << statMean->getRMS() << endl;
         cout << "Number of accepted Events: " << statMean->getNacceptedEv() << endl;
-        cout << endl
-             << endl;
+        cout << endl;
 
         hist->Write();
     }
 
     file->Close();
     delete file;
+
     // Restoring working area;
     currentDir->cd();
 

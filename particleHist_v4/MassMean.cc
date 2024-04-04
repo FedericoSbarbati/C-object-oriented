@@ -5,7 +5,6 @@
 #include "ParticleReco.h"
 #include "Constants.h"
 
-
 // constructor
 MassMean::MassMean(float min, float max) : minMass(min),
                                            maxMass(max)
@@ -25,7 +24,7 @@ MassMean::~MassMean()
 bool MassMean::add(const Event &ev)
 {
   static ParticleReco *ener = ParticleReco::instance();
-   double invMass = ener->getParticleMass();
+  double invMass = ener->getParticleMass();
   // Check masses range
   if (invMass >= minMass && invMass <= maxMass)
   {
@@ -49,16 +48,19 @@ void MassMean::compute()
   mean += minMass; // Re-adding min
 }
 
+// get the number of accepted events
 int MassMean::getNacceptedEv() const
 {
   return nAccepted;
 }
 
+// get the mean value
 double MassMean::getMean() const
 {
   return mean;
 }
 
+// get the root mean square value
 double MassMean::getRMS() const
 {
   return rms;

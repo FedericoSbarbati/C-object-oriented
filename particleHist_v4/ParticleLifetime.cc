@@ -44,7 +44,7 @@ ParticleLifetime::~ParticleLifetime()
 void ParticleLifetime::pCreate(const string &name, float min, float max, float timeMin, float timeMax)
 {
     // create name for TH1F object
-    string label = " time";
+    string label = " decay time hist; T[ns]; Occurrences";
     string title = name + label;
     const char *hName = name.c_str();
     const char *hTitle = title.c_str();
@@ -79,7 +79,7 @@ void ParticleLifetime::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "CREATE"); // RECREATE
+    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "RECREATE"); 
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("time") << endl;
@@ -113,7 +113,7 @@ void ParticleLifetime::endJob()
 
 void ParticleLifetime::update(const Event &ev)
 {
-    // adding event to all the MassMean instances
+    // Filling histogram with decay time
     for (Particle *p : pList)
     {
         if (p->tMean->add(ev))

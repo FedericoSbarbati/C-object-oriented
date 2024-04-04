@@ -20,10 +20,13 @@ SourceFactory::~SourceFactory()
 // create event source
 EventSource *SourceFactory::create(const AnalysisInfo *info)
 {
+  // Check if "input" key is present in the AnalysisInfo object
   if (info->contains("input"))
   {
+    // Create and return an instance of EventReadFromFile
     return new EventReadFromFile(info->value("input"));
   }
+  // Check if "sim" key is present in the AnalysisInfo object
   if (info->contains("sim"))
   {
     stringstream sstr;
@@ -39,7 +42,9 @@ EventSource *SourceFactory::create(const AnalysisInfo *info)
       sstr.str(info->value("seed"));
       sstr >> seed;
     }
+    // Create and return an instance of EventSim
     return new EventSim(nevt, seed);
   }
+  // Return nullptr if neither "input" nor "sim" keys are present
   return nullptr;
 }
