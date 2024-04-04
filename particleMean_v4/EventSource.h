@@ -3,21 +3,19 @@
 
 class Event;
 
-class EventSource {
+class EventSource
+{
 
- public:
-
+public:
   EventSource();
   // deleted copy constructor and assignment to prevent unadvertent copy
-  EventSource           ( const EventSource& x ) = delete;
-  EventSource& operator=( const EventSource& x ) = delete;
+  EventSource(const EventSource &x) = delete;
+  EventSource &operator=(const EventSource &x) = delete;
 
   virtual ~EventSource();
 
   // get an event
-  virtual const Event* get() = 0;
-
+  virtual const Event *get() = 0;
 };
 
 #endif
-

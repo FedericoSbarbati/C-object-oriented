@@ -1,0 +1,4 @@
+rm -f main
+c++ -Wall -I. -o main *cc
+
+./main particle_events.txt

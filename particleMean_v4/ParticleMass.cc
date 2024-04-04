@@ -21,7 +21,7 @@ void ParticleMass::beginJob()
 {
     pList.reserve(2);
 
-    // creating MassMean instance
+    // creating MassMean instance for two different mass ranges
     pList.push_back(new MassMean(0.495, 0.500));
     pList.push_back(new MassMean(1.115, 1.116));
 
@@ -30,19 +30,16 @@ void ParticleMass::beginJob()
 
 void ParticleMass::endJob()
 {
-
     // loop over MassMean objects
     for (MassMean *mMean : pList)
     {
         mMean->compute();
         // Printing results:
-        cout << endl
-             << endl;
+        cout << endl << endl;
         cout << "Mean: " << mMean->getMean() << endl;
         cout << "RMS: " << mMean->getRMS() << endl;
         cout << "Number of accepted Events: " << mMean->getNacceptedEv() << endl;
-        cout << endl
-             << endl;
+        cout << endl << endl;
     }
 
     return;
