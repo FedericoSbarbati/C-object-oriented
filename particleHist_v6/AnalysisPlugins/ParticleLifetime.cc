@@ -68,7 +68,7 @@ void ParticleLifetime::beginJob()
     pList.reserve(10);
 
     // Opening file with fitting informations
-    ifstream file(aInfo->value("fitters").c_str());
+    ifstream file(aInfo->value("fit").c_str());
     if (!file.is_open())
     {
         cerr << "Error opening file with name: " << aInfo->value("ranges") << endl;

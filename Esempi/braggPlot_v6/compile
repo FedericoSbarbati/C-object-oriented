@@ -92,4 +92,4 @@ g++ -Wall -o my_program dum.cc -L${ANALYSIS_PATH} -lAnalysisFramework -lAnalysis
 
 
 #Compiler instructions for the libraries and the executables:
-./runPlot sim 2000 plot prova.root 
+./runMass sim 2000 plot massRanges massRanges
