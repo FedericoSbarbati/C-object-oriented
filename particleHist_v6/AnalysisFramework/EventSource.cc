@@ -1,5 +1,5 @@
-#include "EventSource.h"
-#include "Event.h"
+#include "AnalysisFramework/EventSource.h"
+#include "AnalysisFramework/Event.h"
 #include "util/include/Dispatcher.h"
 
 EventSource::EventSource()

@@ -1,11 +1,11 @@
 #include <cmath>
 
-#include "QuadraticFitter.h"
-#include "LifetimeFit.h"
-#include "Event.h"
-#include "ProperTime.h"
-#include "ParticleReco.h"
-#include "Constants.h"
+#include "AnalysisUtilities/QuadraticFitter.h"
+#include "AnalysisObjects/LifetimeFit.h"
+#include "AnalysisFramework/Event.h"
+#include "AnalysisObjects/ProperTime.h"
+#include "AnalysisObjects/ParticleReco.h"
+#include "AnalysisUtilities/Constants.h"
 
 using namespace std;
 

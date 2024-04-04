@@ -1,9 +1,9 @@
 #include <cmath>
 
-#include "MassMean.h"
-#include "Event.h"
-#include "ParticleReco.h"
-#include "Constants.h"
+#include "AnalysisObjects/MassMean.h"
+#include "AnalysisFramework/Event.h"
+#include "AnalysisObjects/ParticleReco.h"
+#include "AnalysisUtilities/Constants.h"
 
 
 // constructor

@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "EventDump.h"
-#include "Event.h"
-#include "AnalysisFactory.h"
+#include "AnalysisPlugins/EventDump.h"
+#include "AnalysisFramework/Event.h"
+#include "AnalysisFramework/AnalysisFactory.h"
 
 
 using namespace std;

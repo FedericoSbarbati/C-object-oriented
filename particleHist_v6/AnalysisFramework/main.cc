@@ -1,9 +1,9 @@
 #include <vector>
 
-#include "EventSource.h"
-#include "SourceFactory.h"
-#include "AnalysisInfo.h"
-#include "AnalysisFactory.h"
+#include "AnalysisFramework/EventSource.h"
+#include "AnalysisFramework/SourceFactory.h"
+#include "AnalysisFramework/AnalysisInfo.h"
+#include "AnalysisFramework/AnalysisFactory.h"
 #include "util/include/Dispatcher.h"
 
 using namespace std;

@@ -1,4 +1,4 @@
-#include "QuadraticFitter.h"
+#include "AnalysisUtilities/QuadraticFitter.h"
 
 QuadraticFitter::QuadraticFitter():
  sumx0y0( 0.0 ),

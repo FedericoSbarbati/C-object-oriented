@@ -9,12 +9,12 @@
 #include "TDirectory.h"
 #include "util/include/TFileProxy.h"
 
-#include "Event.h"
-#include "AnalysisInfo.h"
-#include "AnalysisFactory.h"
-#include "ParticleLifetime.h"
-#include "LifetimeFit.h"
-#include "ProperTime.h"
+#include "AnalysisFramework/Event.h"
+#include "AnalysisFramework/AnalysisInfo.h"
+#include "AnalysisFramework/AnalysisFactory.h"
+#include "AnalysisPlugins/ParticleLifetime.h"
+#include "AnalysisObjects/LifetimeFit.h"
+#include "AnalysisObjects/ProperTime.h"
 
 using namespace std;
 

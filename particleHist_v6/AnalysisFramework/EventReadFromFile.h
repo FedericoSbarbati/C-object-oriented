@@ -1,7 +1,7 @@
 #ifndef EventReadFromFile_h
 #define EventReadFromFile_h
 
-#include "EventSource.h"
+#include "AnalysisFramework/EventSource.h"
 
 #include <iostream>
 #include <fstream>

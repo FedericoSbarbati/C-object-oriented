@@ -1,7 +1,7 @@
 #ifndef ProperTime_h
 #define ProperTime_h
 
-#include "Event.h"
+#include "AnalysisFramework/Event.h"
 
 #include "util/include/Singleton.h"
 #include "util/include/LazyObserver.h"

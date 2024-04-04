@@ -9,12 +9,12 @@
 #include "TDirectory.h"
 #include "util/include/TFileProxy.h"
 
-#include "Event.h"
-#include "MassMean.h"
-#include "AnalysisInfo.h"
-#include "AnalysisFactory.h"
-#include "ParticleMass.h"
-#include "ParticleReco.h"
+#include "AnalysisFramework/Event.h"
+#include "AnalysisObjects/MassMean.h"
+#include "AnalysisFramework/AnalysisInfo.h"
+#include "AnalysisFramework/AnalysisFactory.h"
+#include "AnalysisPlugins/ParticleMass.h"
+#include "AnalysisObjects/ParticleReco.h"
 
 using namespace std;
 
