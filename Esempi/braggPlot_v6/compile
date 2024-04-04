@@ -1,9 +1,9 @@
 #!/bin/sh
 
-export CORSOCXX_PATH=${HOME}/didattica/corsocxx/y2324
-export CORSOCXX_UTIL=${CORSOCXX_PATH}
+export CORSOCXX_PATH=${HOME}/C-object-oriented/Esempi/braggPlot_v6
+export CORSOCXX_UTIL=${HOME}/C-object-oriented
 cd `dirname $0`
-export ANALYSIS_PATH=`/bin/pwd`
+export ANALYSIS_PATH=/home/fedesbarbi/C-object-oriented/Esempi/braggPlot_v6
 
 #####################################################################
 
