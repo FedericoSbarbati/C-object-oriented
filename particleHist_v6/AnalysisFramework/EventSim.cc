@@ -1,10 +1,9 @@
-#include "AnalysisFramework/EventSim.h"
-
-#include "AnalysisFramework/Event.h"
-
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+
+#include "AnalysisFramework/EventSim.h"
+#include "AnalysisFramework/Event.h"
 
 using namespace std;
 

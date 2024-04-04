@@ -6,8 +6,6 @@
 #include "AnalysisFramework/AnalysisFactory.h"
 #include "util/include/Dispatcher.h"
 
-using namespace std;
-
 int main(int argc, char *argv[])
 {
 

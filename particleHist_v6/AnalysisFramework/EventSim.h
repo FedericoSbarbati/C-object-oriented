@@ -1,10 +1,10 @@
 #ifndef EventSim_h
 #define EventSim_h
 
-#include "AnalysisFramework/EventSource.h"
-
 #include <cmath>
 #include <cstdlib>
+
+#include "AnalysisFramework/EventSource.h"
 
 class Event;
 
