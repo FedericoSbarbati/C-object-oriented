@@ -41,7 +41,11 @@ ParticleLifetime::~ParticleLifetime()
 {
 }
 
-void ParticleLifetime::pCreate(const string &name, double minMass, double maxMass, double minTime, double maxTime, double minScan, double maxScan, double scanStep)
+void ParticleLifetime::pCreate(const string &name,
+                               double minMass, double maxMass,
+                               double minTime, double maxTime,
+                               double minScan, double maxScan,
+                               double scanStep)
 {
     // create name for TH1F object
     string label = " time";
@@ -55,7 +59,7 @@ void ParticleLifetime::pCreate(const string &name, double minMass, double maxMas
     // create TH1F and statistic objects and store their pointers
     Particle *p = new Particle;
     p->name = name;
-    p->tMean = new LifetimeFit(minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep); 
+    p->tMean = new LifetimeFit(minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep);
     p->hMean = new TH1F(hName, hTitle, nBins, minTime, maxTime);
     p->hMean->SetFillColor(kRed);
     pList.push_back(p);
@@ -135,7 +139,7 @@ void ParticleLifetime::endJob()
 
 void ParticleLifetime::update(const Event &ev)
 {
-    // adding event to the lifetime fit
+    // adding event to the lifetime histogram
     for (Particle *p : pList)
     {
         if (p->tMean->add(ev))

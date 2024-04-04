@@ -91,7 +91,7 @@ void ParticleMass::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFileProxy *file = new TFileProxy(aInfo->value("plot").c_str(), "RECREATE"); // RECREATE
+    TFileProxy *file = new TFileProxy(aInfo->value("plot").c_str(), "RECREATE"); 
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("plot") << endl;
@@ -129,7 +129,7 @@ void ParticleMass::endJob()
 
 void ParticleMass::update(const Event &ev)
 {
-    // adding event to all the MassMean instances
+    // adding event to the Masses histogram
     for (Particle *p : pList)
     {
         if (p->mMean->add(ev))
