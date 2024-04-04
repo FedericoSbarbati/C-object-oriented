@@ -55,7 +55,7 @@ void ParticleLifetime::pCreate(const string &name, double minMass, double maxMas
     // create TH1F and statistic objects and store their pointers
     Particle *p = new Particle;
     p->name = name;
-    p->tMean = new LifetimeFit(minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep); // ADJUST
+    p->tMean = new LifetimeFit(minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep); 
     p->hMean = new TH1F(hName, hTitle, nBins, minTime, maxTime);
     p->hMean->SetFillColor(kRed);
     pList.push_back(p);
@@ -66,6 +66,8 @@ void ParticleLifetime::pCreate(const string &name, double minMass, double maxMas
 void ParticleLifetime::beginJob()
 {
     pList.reserve(10);
+
+    // Opening file with fitting informations
     ifstream file(aInfo->value("fitters").c_str());
     if (!file.is_open())
     {
@@ -95,7 +97,7 @@ void ParticleLifetime::endJob()
     // save current working area
     TDirectory *currentDir = gDirectory;
     // open histogram file
-    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "RECREATE"); // RECREATE
+    TFileProxy *file = new TFileProxy(aInfo->value("time").c_str(), "RECREATE"); // changed plot key with time
     if (!file)
     {
         cerr << "Error opening file with name: " << aInfo->value("time") << endl;
@@ -133,7 +135,7 @@ void ParticleLifetime::endJob()
 
 void ParticleLifetime::update(const Event &ev)
 {
-    // adding event to all the MassMean instances
+    // adding event to the lifetime fit
     for (Particle *p : pList)
     {
         if (p->tMean->add(ev))

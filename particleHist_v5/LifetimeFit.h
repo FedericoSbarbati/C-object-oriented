@@ -24,14 +24,14 @@ public:
   double getLifeTimeError() const; // return lifetime error
 
 private:
-  double minMass; // min mass
-  double maxMass; // max mass
+  double minMass; 
+  double maxMass; // Mass range
 
   double minTime;
-  double maxTime;
+  double maxTime; // Time range
 
   double minScan;
-  double maxScan;
+  double maxScan;  // Step range
   double scanStep; // scan step
 
   std::vector<double> decayTimes;

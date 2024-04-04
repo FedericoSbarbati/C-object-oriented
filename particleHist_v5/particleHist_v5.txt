@@ -117,8 +117,5 @@ c++ -Wall -I. -I ${CORSOCXX_UTIL} `root-config --cflags` -o main *cc `root-confi
 To execute:
 
 ./main input particle_events.txt dump
-./main input particle_events.txt plot hist.root time hist.root
-./main input particle_events.txt ranges massRanges.txt fitters particleFitters.txt plot hist.root 
-
 ./main input particle_events.txt ranges massRanges fitters particleFitters plot hist.root 
 ./main input particle_events.txt ranges massRanges fitters particleFitters time hist.root 

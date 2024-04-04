@@ -45,7 +45,7 @@ bool LifetimeFit::add(const Event &ev)
   return false;
 }
 
-// Get methods of the class
+// Get methods implementation of the class
 int LifetimeFit::getNacceptedEv() const
 {
   return decayTimes.size();
@@ -87,19 +87,13 @@ void LifetimeFit::compute()
   }
 
   // Get the coefficients of the fitted quadratic function
-  double a = fitter.a();
+  //double a = fitter.a();
   double b = fitter.b();
   double c = fitter.c();
-  cout << endl;
-  cout << "Min scan = " << minScan << ", max scan = " << maxScan << ", scan step = " << scanStep << endl;
-  cout << "a = " << a << ", b = " << b << ", c = " << c << endl;
 
   // Calculate the mean lifetime (t) and its error
   ltMean = -b / (2. * c);
-  // double error = c > 0.0 ? 1.0 / sqrt(2.0 * c) : 0.0;
-  ltRMS = 1. / sqrt(2. * c);
+  ltRMS = c > 0.0 ? 1.0 / sqrt(2.0 * c) : 0.0;
 
   return;
 }
-
-
