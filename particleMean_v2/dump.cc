@@ -6,8 +6,7 @@ using namespace std;
 void dump(const Event &ev)
 {
 
-    //Dump dell' Event Number?
-
+    //Displaying event data
     cout << ev.getnParticle() << endl;
     cout << ev.getX() << ' ' << ev.getY() << ' ' << ev.getZ() << endl;
 

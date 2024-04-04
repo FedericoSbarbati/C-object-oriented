@@ -6,12 +6,6 @@
 
 #include "Event.h"
 
-/*
-Create a Utilities class, and move inside this new class the two functions
-computing the energy or the mass from the 3 momentum components and the
-mass or the energy, respectively. Declare those functions as "static".
-*/
-
 class Utilities
 {
 public:

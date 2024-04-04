@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     const Event *ev;
     while ((ev = read(file)) != nullptr)
     {
-        //dump(*ev);
+        // dump(*ev);
         k.add(*ev);
         lambda.add(*ev);
         delete ev;
@@ -35,18 +35,21 @@ int main(int argc, char *argv[])
     k.compute();
     lambda.compute();
 
+    // Displaying analysis results
     cout << endl;
     cout << "Results for Lambda0: " << endl;
     cout << "Number of accepted events: " << lambda.getNacceptedEv() << endl;
     cout << "Mean: " << lambda.getMean() << endl;
     cout << "RMS: " << lambda.getRMS() << endl;
-    cout << endl << endl;
+    cout << endl
+         << endl;
 
     cout << "Results for K0: " << endl;
     cout << "Number of accepted events: " << k.getNacceptedEv() << endl;
     cout << "Mean: " << k.getMean() << endl;
     cout << "RMS: " << k.getRMS() << endl;
-    cout << endl << endl;
+    cout << endl
+         << endl;
 
     return 0;
 }
