@@ -24,7 +24,7 @@ ParticleMass::~ParticleMass()
 // create objects for a Bragg curve
 void ParticleMass::pCreate(const string &name, float min, float max)
 {
-    // create name for TH1F object
+    // create name and title for TH1F object
     string label = " invariant Mass hist; M[Gev/c^{2}]; Occurrences";
     string title = name + label;
     const char *hName = name.c_str();
@@ -49,8 +49,8 @@ void ParticleMass::beginJob()
     pList.reserve(2);
 
     // creating Particles instances
-    pCreate("K^{0}_{s}", 0.495, 0.500);
-    pCreate("#Lambda_{0}", 1.115, 1.116);
+    pCreate("K0", 0.495, 0.500);
+    pCreate("LAMBDA0", 1.115, 1.116);
 
     return;
 }
@@ -99,7 +99,7 @@ void ParticleMass::process(const Event &ev)
         if (p->mMean->add(ev))
         {
             double invM = mass(ev);
-            p->hMean->Fill(invM);
+            p->hMean->Fill(invM); // Fill the histogram with the invariant mass
         }
     }
     return;

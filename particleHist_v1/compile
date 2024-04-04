@@ -1,0 +1,5 @@
+rm -f main
+c++ -Wall -I. `root-config --cflags` -o main *cc `root-config --libs`
+
+./main input particle_events.txt
+./main sim 2000
