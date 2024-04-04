@@ -1,0 +1,42 @@
+# LAUNCH BEFORE THE STARTING
+
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}":."${ANALYSIS_PATH}
+export LD_LIBRARY_PATH=${ANALYSIS_PATH}:${LD_LIBRARY_PATH}
+
+#Compiler instructions for the libraries and the executables
+
+Input data:
+
+./exec input file.txt -> Read file as input
+./exec sim 2000 -> Generate 2000 events with random seeds
+
+ranges massRanges -> input file for the mass ranges of the analysis (which is now called massRanges )
+fit particleFitters -> input file for the lifetime fit parameters of the analysis (which is now called particleFitters )
+
+Output data:
+
+plot -> output file.root with the histograms of the masses
+time -> output file.root with the histograms of the lifetimes
+
+
+# Examples:
+
+# DUMP INFORMATION
+./runDump input particle_events.txt dump
+./runDump sim 2000 dump
+
+# PLOT MASS (Necessary specify the masses ranges)
+
+./runMass input particle_events.txt ranges massRanges plot masseProva.root
+./runMass sim 3000 ranges massRanges plot masseProva.root
+
+# PLOT TIME (Necessary specify the lifetime fit parameters)
+
+./runTime input particle_events.txt fit particleFitters time timeProva.root
+./runTime sim 3000 fit particleFitters time timeProva.root
+
+# PLOT ALL (Necessary specify the masses ranges and the lifetime fit parameters if the relative analysis mode input is present)
+
+./runAll input particle_events.txt ranges massRanges fit particleFitters plot allProva.root time allProva.root
+./runAll sim 3000 ranges massRanges fit particleFitters plot allProva.root time allProva.root
+
