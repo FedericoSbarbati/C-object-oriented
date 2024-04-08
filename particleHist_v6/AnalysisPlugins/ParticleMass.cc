@@ -24,7 +24,7 @@ class ParticleMassFactory : public AnalysisFactory::AbsFactory
 public:
     // assign "plot" as name for this analyzer and factory
     ParticleMassFactory() : AnalysisFactory::AbsFactory("plot") {}
-    // create an ElementReco when builder is run
+    // create a ParticleMass when builder is run
     AnalysisSteering *create(const AnalysisInfo *info) override
     {
         return new ParticleMass(info);

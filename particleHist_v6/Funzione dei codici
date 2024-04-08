@@ -1,0 +1,293 @@
+
+FRAMEWORK
+
+
+
+EVENT:
+
+Contiene le variabili necessarie per leggere e catalogare i dati da analizzare, fornisce lo scheletro per l'analisi
+
+// Lettura dati
+
+ANALYSISINFO:
+
+Ha due enum: begin ed end.
+Ha funzioni per leggere stringhe e vedere se una parola è contenuta in una di queste
+Ha come membro privato args per leggere le informazioni riguardo alle analisi (key, input mode)
+
+
+EVENTSOURCE:
+
+Classe base da cui sviluppare i metodi per inserire dati: input o simulazione
+Funzione run() per leggere tutti gli eventi:
+Durante run alla lettura di un evento il DISPATCHER chiama    Dispatcher<Event>::notify( *ev );
+
+Funzione get() ASTRATTA da override per prendere un evento
+
+(1)EventReadFromFile:
+
+Derivata di EventSource.
+Funzione get() legge un evento da un file .txt
+
+(2) EventSim: 
+
+Derivata da EventSource.
+Funzione get() simula un evento.
+
+SOURCEFACTORY:
+
+Si occupa di creare nel main le variabili di classi derivate da EVENTSOURCE.
+Contiene solo la funzione create( info ) che in base al comando dell'utente crea un EventReadFromFile o un EventSim con un dato seme.
+Nel main si chiama la funzione: SourceFactory::create(info)
+
+
+
+// Analisi
+
+ANALYSISSTEERING:
+
+E' un ACTIVE OBSERVER, fa override della funzione UPDATE della classe Observer.
+Contiene le funzioni ABSTRACT beginJob() e endJob() che si differenziano nelle classi derivate.
+
+Come membro protetto ha un AnalysisInfo.
+
+
+
+ANALYSISFACTORY:
+
+Contiene la classe AbsFactory:
+
+(1) ABS FACTORY: Il suo costruttore chiama la funzione:  static void registerFactory(const string &name, AbsFactory *f)
+    Contiene la funzione create( info ) = 0 ASTRATTA
+
+Come membri privati ha:
+
+static std::map<std::string, AbsFactory *> *factoryMap();
+Mappa di tutte le fabbriche di Analizzatori disponibili
+
+static void registerFactory(const std::string &name, AbsFactory *f);
+Associa name alla Fabbrica e l'aggiunge all'interno della mappa.
+
+Sono static e vengono eseguiti prima del main.
+
+(2) Costruttore di AbsFactory:     AbsFactory(const std::string &name) { registerFactory(name, this); }
+    Permette di creare un oggetto AbsFactory registrando l'esistenza della fabbrica all'interno della mappa
+
+
+
+
+
+
+
+OBJECTS
+
+
+
+// Calcolo della Massa Invariante e classificazione del Decadimento
+
+PARTICLERECO: Calcola la massa invariante ogni volta che si legge un nuovo evento
+
+E' un SINGLETON e un LAZYOBSERVER.
+Ha costruttore e distruttore che sono variabili private essendo un SINGLETON.
+Ha come FRIEND CLASS: friend class Singleton<ParticleReco>;
+
+Contiene informazioni sulla particella:
+(1) Tipo di Particella: K0, L0 o sconosciuta
+(2) Energia Totale del decadimento e Massa Invariante del decadimento
+
+Essendo un derivato di LazyObserver effettua l'override di void ParticleReco::update(const Event &ev)
+Quando si legge un nuovo evento questo la chiamata della funzione update calcola la MassaInvariante 
+del decadimento e lo classifica.
+
+
+MASSMEAN:
+
+Permette di selezionare un range di masse e seleziona gli eventi con massa invariante all'interno del range.
+Per gli eventi selezionati calcola: MassaInvariante media e RMS (incertezza associata)
+
+Contiene i metodi:
+
+bool add( &ev ): Aggiunge un evento a quelli selezionati 
+                 Chiama l'istanza di ParticleReco per il decadimento ev e si fa dare la massa invariante.
+                 Aggiorna le sue variabili private (somme) se la massa calcolata da ParticleReco è nel Range
+void compute() : Calcola media e rms con i dati disponibili
+
+
+// Calcolo del tempo di volo e fit quadratico dei dati
+
+PROPER TIME:
+
+E' un SINGLETON e un LAZYOBSERVER.
+Ha costruttore e distruttore che sono variabili private essendo un SINGLETON.
+Ha come FRIEND CLASS:   friend class Singleton<ProperTime>;
+
+Contiene informazioni sulla particella:
+(1) Tipo di Particella: K0, L0 o sconosciuta
+(2) Energia Totale del decadimento e Massa Invariante del decadimento
+(3) Tempo di volo (Calcolato dalla posizione del decadimento)
+
+Essendo un derivato di LazyObserver effettua l'override di void ProperTime::update(const Event &ev)
+Quando si legge un nuovo evento questo chiama la funzione update per calcolare il tempo di volo.
+Per calcolare il tempo di volo è necessaria la quantità di moto che si calcola prendendo i dati:
+energia totale e massa invariante messi a disposizione dal SINGLETON ParticleReco.
+
+
+
+LIFETIME FIT:
+
+Permette di selezionare un range di masse e tempi di volo. Inoltre accetta un range di scan step con passo dato
+Per gli eventi selezionati calcola: Tempo di volo medio e RMS (incertezza associata)
+
+Contiene i metodi:
+
+bool add( &ev ): Aggiunge un evento a quelli selezionati 
+                 Chiama l'istanza di ParticleReco per il decadimento ev e si fa dare la massa invariante.
+                 Chiama l'istanza di ProperTime per il decadimento ev e si fa dare il tempo di volo.
+
+                 Se i dati sono nel range allora aggiunge il tempo di volo a un vettore che li contiene tutti.
+void compute() : Usa la classe QuadratiFitter per fittare i tempi di volo e vengono restituiti media e rms dal fit
+
+
+
+PLUGINS
+
+
+
+EVENTDUMP:
+
+E' un ACTIVE OBSERVER ederiva da ANALYSISSTEERING
+
+Si implementa la fabbrica:
+
+   EventDumpFactory() : AnalysisFactory::AbsFactory("dump") {}
+  AnalysisSteering *create(const AnalysisInfo *info) override
+  {
+    return new EventDump(info); 
+  }
+  static EventDumpFactory ed;
+
+Chiama costruttore della classe AbsFactory e registra nella mappa con la chiave: "dump".
+Lo static viene eseguito prima del main e fornisce la modalità di analisi.
+
+
+Esegue override di beginJob(), endJob() e update().
+Ogni volta che riceve una notifica dal DISPATCHER viene chiamata update che dumpa i dati
+
+
+// Flusso del calcolo delle statistiche per la Massa Invariante
+
+PARTICLEMASS:
+
+E' un ACTIVE OBSERVER ederiva da ANALYSISSTEERING
+
+Si implementa la fabbrica:
+
+class ParticleMassFactory : public AnalysisFactory::AbsFactory
+{
+public:
+    ParticleMassFactory() : AnalysisFactory::AbsFactory("plot") {}
+    AnalysisSteering *create(const AnalysisInfo *info) override
+    {
+        return new ParticleMass(info);
+    }
+};
+
+static ParticleMassFactory pm;
+
+Chiama costruttore della classe AbsFactory e registra nella mappa con la chiave: "plot".
+Lo static viene eseguito prima del main e fornisce la modalità di analisi.
+
+
+Esegue override di beginJob(), endJob() e update().
+
+Contiene elementi PRIVATI:
+(1) struct PARTICLE con: nome, oggetto MassMean, oggetto TH1F
+(2) vettore di particle pointer:   vector<Particle *> pList
+(3) la funzione pCreate(name, minMass, maxMass)
+
+Funzioni:
+
+(1) pCreate (name, minMass, maxMass):
+    Crea un TH1F e assegna titolo e numero di bin.
+    Crea un particle* e lo pusha nella vector<Particle *> pList
+
+(2) beginJob(): Esegue override
+    Cercando la parola "ranges" prende il file che segue e da questo legge:
+    nome, massMin, massMax e tramite pCreate crea le istanze di particle* 
+    e le aggiunge in pList
+
+(3) update(): Esegue override
+    Ogni volta che si legge un nuovo evento scorre la pList e chiama la funzione:
+
+    (3.1) p->mMean->add(ev) e in base ai range aggiunge o meno l'evento alle statistiche
+    (3.2) Aggiunge la MassaInvariante all'istogramma chiamando il SINGLETON PARTICLERECO.
+
+(4) endJob(): Esegue override
+    Se l'input contiene "plot" la parola successiva è il nome del file che viene creato.
+    Chiama la funzione compute() di MassMean per ogni elemento della pList (K0,L0) 
+    e calcola la Massa Invariante media e RMS.
+    Stampa i risultati e salva il grafico TH1F
+
+
+// Flusso del calcolo delle statistiche per il Tempo di Volo
+
+PARTICLELIFETIME:
+
+E' un ACTIVE OBSERVER ederiva da ANALYSISSTEERING
+
+Si implementa la fabbrica:
+
+class ParticleLifetimeFactory : public AnalysisFactory::AbsFactory
+{
+public:
+    ParticleLifetimeFactory() : AnalysisFactory::AbsFactory("time") {}
+    AnalysisSteering *create(const AnalysisInfo *info) override
+    {
+        return new ParticleLifetime(info);
+    }
+};
+
+static ParticleMassFactory pm;
+
+Chiama costruttore della classe AbsFactory e registra nella mappa con la chiave: "time".
+Lo static viene eseguito prima del main e fornisce la modalità di analisi.
+
+
+Esegue override di beginJob(), endJob() e update().
+
+Contiene elementi PRIVATI:
+(1) struct PARTICLE con: nome, oggetto LifetimeFit, oggetto TH1F
+(2) vettore di particle pointer:   vector<Particle *> pList
+(3) la funzione pCreate( name, minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep )
+
+Funzioni:
+
+(1) pCreate( name, minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep ):
+    Crea un TH1F e assegna titolo e numero di bin.
+    Crea un particle* e lo pusha nella vector<Particle *> pList
+
+(2) beginJob(): Esegue override
+    Cercando la parola "fit" prende il file che segue e da questo legge:
+    name, minMass, maxMass, minTime, maxTime, minScan, maxScan, scanStep
+    poi tramite pCreate crea le istanze di particle* e le aggiunge in pList
+
+(3) update(): Esegue override
+    Ogni volta che si legge un nuovo evento scorre la pList e chiama la funzione:
+
+    (3.1) p->mMean->add(ev) e in base ai range aggiunge o meno l'evento alle statistiche
+    (3.2) Aggiunge il tempo di volo all'istogramma chiamando il SINGLETON PROPERTIME.
+
+(4) endJob(): Esegue override
+    Se l'input contiene "time" la parola successiva è il nome del file che viene creato.
+    Chiama la funzione compute() di LifeTime per ogni elemento della pList (K0,L0) 
+    ed esegue il fit dei dati.
+    Stampa i risultati e salva il grafico TH1F.
+
+
+
+
+
+
+
+
+

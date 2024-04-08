@@ -22,9 +22,9 @@ using namespace std;
 class ParticleLifetimeFactory : public AnalysisFactory::AbsFactory
 {
 public:
-    // assign "plot" as name for this analyzer and factory (changed plot key with time)
+    // assign "time" as name for this analyzer and factory
     ParticleLifetimeFactory() : AnalysisFactory::AbsFactory("time") {}
-    // create an ElementReco when builder is run
+    // create an ParticleLifetime when builder is run
     AnalysisSteering *create(const AnalysisInfo *info) override
     {
         return new ParticleLifetime(info);
