@@ -12,7 +12,7 @@ bool add(const Event& ev, double min, double MAX, double& invMsum, double& squar
     double invMass = mass(&ev);
     if (invMass > min && invMass < MAX)
     {
-        invMass -= min;
+        invMass -= min; // Subtracting the minimum value
         invMsum += invMass;
         squareSum += (invMass * invMass);
 

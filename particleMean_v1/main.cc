@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     mean = invMsum/((double)nAccepted);
     RMS = sqrt(squareSum/ ((double)nAccepted)- mean*mean);
 
-    mean += min;
+    mean += min; // Readding the minimum value to the mean
 
     cout << "Mean: " << mean << endl;
     cout << "RMS: " << RMS << endl;
