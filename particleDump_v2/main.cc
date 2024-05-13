@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    const Event *ev;
+    const Event *ev; // Pointer to a const Event object
 
     // Read events from the file until there are no more
     while ((ev = read(file)) != nullptr)

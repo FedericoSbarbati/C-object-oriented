@@ -19,13 +19,14 @@ double invariantMass(double px, double py, double pz, double E)
   return invM;
 }
 
-const double massPion = 0.1395706;   // GeV/c^2
-const double massProton = 0.938272;  // GeV/c^2
-const double massK0 = 0.497611;      // GeV/c^2
-const double massLambda0 = 1.115683; // GeV/c^2
-
 double mass(const Event *ev)
 {
+  // Needed constants
+  const double massPion = 0.1395706;   // GeV/c^2
+  const double massProton = 0.938272;  // GeV/c^2
+  const double massK0 = 0.497611;      // GeV/c^2
+  const double massLambda0 = 1.115683; // GeV/c^2
+
   // retrieve particles in the event
   typedef const Particle *part_ptr;
   const part_ptr *particles = ev->part;
@@ -94,5 +95,4 @@ double mass(const Event *ev)
   {
     return invMassKO;
   }
-
 }

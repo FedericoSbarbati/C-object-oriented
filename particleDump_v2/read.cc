@@ -5,7 +5,7 @@
 
 const Event *read(std::ifstream &file)
 {
-    // Create a new Event object
+    // Create a new Event object (Dynamic memory allocation)
     Event *ev = new Event;
 
     // Read the event number from the file
