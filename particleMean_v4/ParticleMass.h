@@ -29,6 +29,7 @@ public:
 
 private:
     std::vector<MassMean *> pList;
+    
 };
 
 #endif

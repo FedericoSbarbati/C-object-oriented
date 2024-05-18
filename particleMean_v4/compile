@@ -1,4 +1,8 @@
 rm -f main
 c++ -Wall -I. -o main *cc
 
-./main particle_events.txt
+%Read from file
+./input  input particle_events.txt
+
+%Simulate data
+./sim sim 2000
