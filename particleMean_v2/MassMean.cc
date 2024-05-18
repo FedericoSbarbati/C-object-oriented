@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 
 #include "MassMean.h"
 #include "Event.h"
@@ -39,6 +40,13 @@ void MassMean::add(const Event &ev)
 // Compute the mean and rms of the accepted events
 void MassMean::compute()
 {
+
+  // Check for call with no data
+  if (nAccepted == 0)
+  {
+    std::cout << "No accepted events" << std::endl;
+    return;
+  }
   mean = massSum / ((double)nAccepted);
   rms = sqrt(squareSum / ((double)nAccepted) - mean * mean);
 
