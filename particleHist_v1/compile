@@ -3,3 +3,10 @@ c++ -Wall -I. `root-config --cflags` -o main *cc `root-config --libs`
 
 ./main input particle_events.txt
 ./main sim 2000
+
+
+% Root instruction to plot histogram
+ 
+TFile *file = TFile::Open("hist.root");
+TH1F *histogram = (TH1F*)file->Get("histogram");
+histogram->Draw();
