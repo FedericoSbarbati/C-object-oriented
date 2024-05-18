@@ -6,7 +6,7 @@
 
 using namespace std;
 
-// DECLARATION AND DEFINITION OF EVENT DUMP FACTORY: concrete factory to create an EventDump analyzer (IMPORTANTE!!)
+// DECLARATION AND DEFINITION OF EVENT DUMP FACTORY: concrete factory to create an EventDump analyzer 
 class EventDumpFactory : public AnalysisFactory::AbsFactory
 {
 public:

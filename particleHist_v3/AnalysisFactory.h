@@ -30,7 +30,7 @@ public:
     // created only if, at runtime, their name is listed in the command line
     AbsFactory(const std::string &name) { registerFactory(name, this); }
     virtual ~AbsFactory() {}
-    virtual AnalysisSteering *create(const AnalysisInfo *info) = 0;
+    virtual AnalysisSteering *create(const AnalysisInfo *info) = 0; // See AnalysisFactory::create(info)
   };
 
 private:
