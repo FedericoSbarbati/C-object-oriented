@@ -26,7 +26,7 @@ public:
     ParticleMassFactory() : AnalysisFactory::AbsFactory("plot") {}
 
     // create an ParticleMass when builder is run
-    AnalysisSteering *create(const AnalysisInfo *info) override
+    AnalysisSteering *create(const AnalysisInfo *info) override // See AnalysisFactory::create(info)
     {
         return new ParticleMass(info);
     }
