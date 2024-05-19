@@ -42,8 +42,15 @@ bool MassMean::add(const Event &ev)
 // compute mean and rms
 void MassMean::compute()
 {
-  mean = massSum / ((double)nAccepted);
-  rms = sqrt(squareSum / ((double)nAccepted) - mean * mean);
+  // Check for call with no data
+  if (nAccepted == 0)
+  {
+    std::cout << "No accepted events" << std::endl;
+    return;
+  }
+
+  mean = massSum / static_cast<double>(nAccepted);
+  rms = sqrt(squareSum / static_cast<double>(nAccepted) - mean * mean);
 
   mean += minMass; // Re-adding min
 }
