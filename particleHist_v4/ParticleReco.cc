@@ -98,28 +98,26 @@ void ParticleReco::update(const Event &ev)
     totalEnergy = EtotKO;
     return;
   }
-
 }
 
 // return particle type
-  ParticleReco::ParticleType ParticleReco::getParticleType() 
-  {
-    // check for new event and return result
-    check();
-    return decayType;
-
-    }
+ParticleReco::ParticleType ParticleReco::getParticleType()
+{
+  // check for new event and return result
+  check();
+  return decayType;
+}
 
 // return particle energy
-double ParticleReco::getParticleEnergy() 
+double ParticleReco::getParticleEnergy()
 {
-    // check for new event and return result
-    check();
-    return totalEnergy;
-    }
+  // check for new event and return result
+  check();
+  return totalEnergy;
+}
 
 // return particle mass
-double ParticleReco::getParticleMass() 
+double ParticleReco::getParticleMass()
 {
   // check for new event and return result
   check();
