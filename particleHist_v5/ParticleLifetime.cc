@@ -50,7 +50,8 @@ void ParticleLifetime::pCreate(const string &name,
     // create name for TH1F object
     string label = " decay time hist; T[ns]; Occurrences";
     string title = name + label;
-    const char *hName = name.c_str();
+    string mane = name + "TIME";
+    const char *hName = mane.c_str();
     const char *hTitle = title.c_str();
 
     // Setting bin number constant
