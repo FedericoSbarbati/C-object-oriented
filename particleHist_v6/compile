@@ -89,3 +89,26 @@ g++ -Wall -fPIC -I. -I ${ANALYSIS_PATH} -I ${CORSOCXX_UTIL}         \
 -lEventDump -lParticleLifetime -lParticleMass `root-config --libs`
 
 #####################################################################
+
+
+
+# Examples:
+
+# DUMP INFORMATION
+./runDump input particle_events.txt dump
+./runDump sim 2000 dump
+
+# PLOT MASS (Necessary specify the masses ranges)
+
+./runMass input particle_events.txt ranges massRanges plot massHist_input.root
+./runMass sim 3000 ranges massRanges plot massHist_sim.root
+
+# PLOT TIME (Necessary specify the lifetime fit parameters)
+
+./runTime input particle_events.txt fit particleFitters time timeHist_input.root
+./runTime sim 3000 fit particleFitters time timeHist_sim.root
+
+# PLOT ALL (Necessary specify the masses ranges and the lifetime fit parameters if the relative analysis mode input is present)
+
+./runAll input particle_events.txt ranges massRanges fit particleFitters plot hist_input.root time hist_input.root
+./runAll sim 3000 ranges massRanges fit particleFitters plot hist_sim.root time hist_sim.root
