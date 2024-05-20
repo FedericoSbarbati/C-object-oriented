@@ -48,7 +48,7 @@ void ParticleMass::pCreate(const string &name, float min, float max)
     string label = " invariant Mass hist; M[Gev/c^{2}]; Occurrences";
     string title = name + label;
     string mane = name + "MASS";
-    const char *hName = name.c_str();
+    const char *hName = mane.c_str();
     const char *hTitle = title.c_str();
 
     // Setting bin number constant
