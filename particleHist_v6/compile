@@ -1,3 +1,8 @@
+# LAUNCH BEFORE THE STARTING
+
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}":."${ANALYSIS_PATH}
+export LD_LIBRARY_PATH=${ANALYSIS_PATH}:${LD_LIBRARY_PATH}
+
 #!binsh
 
 export CORSOCXX_PATH=${HOME}/C-object-oriented/particleHist_v6
@@ -7,12 +12,30 @@ export ANALYSIS_PATH=/home/fedesbarbi/C-object-oriented/particleHist_v6/
 
 #####################################################################
 
+# Set the name of the library to be compiled
 export LIB_NAME=AnalysisFramework
+
+# Print a message to the console indicating that the library is being compiled
 echo "compile " ${LIB_NAME}
+
+# Change the current directory to the directory where the source code for the library is located
 cd ${ANALYSIS_PATH}/${LIB_NAME}
+
+# Remove any existing shared library file
 rm -f ${ANALYSIS_PATH}/lib${LIB_NAME}.so
+
+# Compile the source code into a new shared library
+# -Wall: Enable all compiler's warning messages
+# -fPIC: Generate position-independent code suitable for dynamic linking
+# -shared: Generate a shared library
+# -I.: Look for header files in the current directory
+# -I ${CORSOCXX_UTIL}: Look for header files in the directory specified by CORSOCXX_UTIL
+# -I ${ANALYSIS_PATH}: Look for header files in the directory specified by ANALYSIS_PATH
+# -o ${ANALYSIS_PATH}/lib${LIB_NAME}.so: Specify the output file name
+# *.cc: Compile all .cc files in the current directory
 c++ -Wall -fPIC -shared -I. -I ${CORSOCXX_UTIL} -I ${ANALYSIS_PATH} \
 -o ${ANALYSIS_PATH}/lib${LIB_NAME}.so *.cc
+
 
 export LIB_NAME=AnalysisObjects
 echo "compile " ${LIB_NAME}
@@ -56,9 +79,26 @@ g++ -Wall -fPIC -shared -I. -I ${CORSOCXX_UTIL} -I ${ANALYSIS_PATH} \
 
 cd ${ANALYSIS_PATH}
 
+# Set the name of the executable to be compiled
 export EXE_NAME=runDump
+
+# Print a message to the console indicating that the executable is being compiled
 echo "compile " ${EXE_NAME}
+
+# Remove any existing executable file with the same name
 rm -f ${EXE_NAME}
+
+# Compile the source code into a new executable
+# -Wall: Enable all compiler's warning messages
+# -fPIC: Generate position-independent code suitable for dynamic linking
+# -I.: Look for header files in the current directory
+# -I ${ANALYSIS_PATH} and -I ${CORSOCXX_UTIL}: Look for header files in the directories specified by ANALYSIS_PATH and CORSOCXX_UTIL
+# -o ${EXE_NAME}: Specify the output file name
+# dum.cc: This is the source file to be compiled
+# -L ${ANALYSIS_PATH}: Look for libraries in the directory specified by ANALYSIS_PATH
+# -Wl,--no-as-needed: This linker option tells the linker to link all the specified libraries, even if they don't seem to be used
+# -lAnalysisFramework -lAnalysisObjects -lAnalysisUtilities -lEventDump: These options specify the libraries to link against. 
+# The -l option is followed by the name of the library without the lib prefix and the .so extension
 g++ -Wall -fPIC -I. -I ${ANALYSIS_PATH} -I ${CORSOCXX_UTIL}         \
 -o ${EXE_NAME} dum.cc -L ${ANALYSIS_PATH} -Wl,--no-as-needed        \
 -lAnalysisFramework -lAnalysisObjects -lAnalysisUtilities           \
