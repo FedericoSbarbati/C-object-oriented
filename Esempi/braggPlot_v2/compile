@@ -1,2 +1,0 @@
-rm -f main
-c++ -Wall -I. `root-config --cflags` -o main *cc `root-config --libs`

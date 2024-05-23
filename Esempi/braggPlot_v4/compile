@@ -1,4 +1,0 @@
-#!/bin/sh
-rm -f main
-export CORSOCXX_UTIL=${HOME}/C-object-oriented/
-c++ -Wall -I. -I ${CORSOCXX_UTIL} `root-config --cflags` -o main *cc `root-config --libs`
